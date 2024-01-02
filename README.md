@@ -1,1 +1,18 @@
 # HTAN_Lung
+
+This repository contains custom code to reproduce main analyses in our manuscript, "A cellular and spatial atlas of TP53-associated tissue remodeling in lung adenocarcinoma."
+
+System Requirements:
+- Operating System: Tested on RedHat 7.7 x86_64.
+- R Version: 4.1.0
+- R Packages:
+  - Seurat (v4.1.0) (https://satijalab.org/seurat/)
+  - ComplexHeatmap (v2.10.0) (https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html)
+  - clusterProfiler (v4.2.2) (https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html)
+  - SCENT (v1.0.3) (https://github.com/aet21/SCENT)
+  - ggpubr (v0.4.0) (https://rdrr.io/cran/ggpubr/)
+  - ggplot2 (v3.3.6) (https://ggplot2.tidyverse.org)
+  - cgdsr (v1.3.0) (https://rdrr.io/cran/cgdsr)
+  - survival (v3.2.11) (https://rdrr.io/cran/survival/)
+- Additional Hardware: No special hardware required.
+
