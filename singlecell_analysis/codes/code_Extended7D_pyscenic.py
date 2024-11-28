@@ -1,26 +1,10 @@
-import os, glob, re, pickle
-from functools import partial
-from collections import OrderedDict
-import operator as op
-from cytoolz import compose
+import os
 
 import pandas as pd
-import seaborn as sns
-import numpy as np
 import scanpy as sc
-import anndata as ad
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-from pyscenic.export import export2loom, add_scenic_metadata
-from pyscenic.utils import load_motifs
-from pyscenic.transform import df2regulons
-from pyscenic.aucell import aucell
-from pyscenic.binarization import binarize
 from pyscenic.rss import regulon_specificity_scores
-from pyscenic.plotting import plot_binarization, plot_rss
-
-from IPython.display import HTML, display
 
 DATA_INPUT = "./data/"
 FIGURES_FOLDERNAME = "../../figures/Fig3_stroma/"

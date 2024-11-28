@@ -47,7 +47,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 
 ##########
 # load all obj
-all = get(load("/dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -103,7 +103,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1D
-all = get(load("/dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -140,7 +140,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1E
-malig <- get(load("/dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
 
 maligv9.allsamples = malig
 
@@ -204,7 +204,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1F and Extended 1D
-all = get(load("/dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -351,7 +351,7 @@ write.csv(info, file = paste0(source.data.dir, "Fig1_overview/Ext_Fig1A_sourceda
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 1B
-all = get(load("/dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 ############
 pdf(file = paste0(figures.dir, "Fig1_overview_V2/Ext_Fig1B.pdf"), useDingbats = F, width = 8)
@@ -370,7 +370,7 @@ write.csv(p_data, paste0(source.data.dir, "Fig1_overview/Ext_Fig1B_sourcedata.cs
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 1C
-all = get(load("/dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype

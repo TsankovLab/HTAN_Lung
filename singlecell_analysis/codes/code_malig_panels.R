@@ -44,7 +44,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2A
-malig <- get(load("/dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
 
 Idents(malig)  <- "subtype"
 malig.names<-c("AT2.like", "AT1.2.like", "CC.G2M", "CC.S", "Ciliated", 
@@ -64,7 +64,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2B
-malig <- get(load("/dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
 
 genes <- c("SFTPA2", "SFTPA1", "SFTPC", "AKR1C1", "PTTG1", "CDKN3", "HIST1H4C", "PCNA", "CAPS", "CETN2", "PKM", "LDHA", "HLA-DRA", "HLA-DPA1", 'NDRG1',
            "SLC2A1", "ISG15", "IFI6", "HSPA1A", "JUN", "MT-ND5", "MT-ND6", "MT2A", "MT1X", "ATP5I", "SEPP1", "LAMC2", "VIM", "RPL32", "RPL29","LCN2", "SLPI", "S100A4", "KRT19", "NFKBIA", "CXCL2")
@@ -120,7 +120,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2E (left)
-malig <- get(load("/dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
 
 maligv9.allsamples = malig
 
@@ -303,7 +303,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 3A
-malig <- get(load("/dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
 
 ###########
 pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig2A.pdf"), useDingbats = F, width = 10)
@@ -698,7 +698,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 5A (Right-hif1a)
-obj <- get(load("/dropbox_data/kp_mouse_30wks.Rda"))   
+obj <- get(load("./dropbox_data/kp_mouse_30wks.Rda"))   
 
 #############
 gene_exp = FetchData(obj, vars = "HIF1A", slot = "counts")  ## already normalized  
@@ -722,7 +722,7 @@ mean.plot <- ggviolin(comp.df, x = "status", y = "HIF1A", color = "black", fill 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 5D
-data = get(load("/dropbox_data/malig.subset.for.ccat.df.Rda"))
+data = get(load("./dropbox_data/malig.subset.for.ccat.df.Rda"))
 
 #
 res = data@meta.data[,c("ccat.v", "subtype")]
