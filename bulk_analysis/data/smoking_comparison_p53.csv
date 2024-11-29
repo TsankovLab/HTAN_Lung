@@ -1,0 +1,24 @@
+﻿Patient,Pack yrs,TP53,TP53_mut
+P14,12,,
+P17,50,FSD,p.F385fs
+P19,35,missense,p.R280I
+MGH1170,27,,
+MGH1172,25,splicing,
+MGH1173,50,splicing,
+MGH1174,30,,
+MGH1175,60,missense,p.Y205C
+MGH1176,0,,
+MGH1179,13,,
+MGH1181,90,missense,p.L137Q
+MGH1182,60,multiple,"p.E294*,p.R158L"
+MGH1183,13,,
+BWH01,40,,
+BWH04,0,,
+BWH05,100,,
+BWH06,80,missense,p.R267P
+BWH09,25,,
+BWH11,17,missense,p.S241F
+BWH14,54,missense,p.H179R
+BWH16,20,splicing,
+BWH19,25,,
+BWH23,60,,
