@@ -439,7 +439,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 3I
-maligv9.scores.df <- get(load(paste0(data.path, "Ext_Fig3I_labeltrans.Rda")))
+maligv9.scores.df <- get(load(paste0(data.path, "Ext_Fig3I_modulescore.Rda")))
 
 maligv9.scores.list <- split(maligv9.scores.df, f = maligv9.scores.df$sampleID)
 maligv9.scores.list.avg <- lapply(maligv9.scores.list, function(x) {
@@ -697,13 +697,10 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended Figure 5A (Right-hif1a)
-obj <- get(load("./dropbox_data/kp_mouse_30wks.Rda"))   
+##################### Extended Figure 5A (Right-Hif1a)
+comp.df = get(load(paste0(data.path, "exp_Hif1a_kp_mouse_30wks.Rda")))  
 
 #############
-gene_exp = FetchData(obj, vars = "HIF1A", slot = "counts")  ## already normalized  
-comp.df = cbind(gene_exp, obj$orig.ident)
-
 colnames(comp.df)[2] = "status"
 comp.df$status = as.character(comp.df$status)
 comp.df$status[which(comp.df$status == "T")] = "Normal"
@@ -722,7 +719,7 @@ mean.plot <- ggviolin(comp.df, x = "status", y = "HIF1A", color = "black", fill 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 5D
-data = get(load("./dropbox_data/malig.subset.for.ccat.df.Rda"))
+res = get(load(paste0(data.path, "ccat.df.malig.subset.Rda")))
 
 #
 res = data@meta.data[,c("ccat.v", "subtype")]
