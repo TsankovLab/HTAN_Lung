@@ -132,22 +132,22 @@ ggsave(filename = file.path(paste0(figures.dir, "s4c.pdf")),
        height = 5)
 
 
-# EXTENDED FIG 4B
+# EXTENDED FIG 5B
 levels.tmp <- levels(combined.luad.2018@meta.data$DNE_LOFclass)
-p.s4bA <- createEntropyViolinplots(plotVar = "ccat", outfileName = "s4bA",
+p.s5bA <- createEntropyViolinplots(plotVar = "ccat", outfileName = "s5bA",
                          titleStr = NULL,
                          plotDF = combined.luad.2018@meta.data, 
                          xVar = "DNE_LOFclass", 
                          comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)))
 levels.tmp <- levels(combined.luad.2018@meta.data$impact)
-p.s4bB <- createEntropyViolinplots(plotVar = "ccat", outfileName = "s4bB",
+p.s5bB <- createEntropyViolinplots(plotVar = "ccat", outfileName = "s5bB",
                          titleStr = NULL,
                          plotDF = combined.luad.2018@meta.data, 
                          xVar = "impact", 
                          comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)))
-p.s4bA + p.s4bB + patchwork::plot_layout(axes = "collect_y")
-ggsave(filename = file.path(paste0(figures.dir, "s4b.pdf")), 
-       plot = (p.s4bA + p.s4bB + patchwork::plot_layout(axes = "collect_y")), 
+p.s5bA + p.s5bB + patchwork::plot_layout(axes = "collect_y")
+ggsave(filename = file.path(paste0(figures.dir, "s5b.pdf")), 
+       plot = (p.s5bA + p.s5bB + patchwork::plot_layout(axes = "collect_y")), 
        device = "pdf", 
        width = 4 * 2, 
        height = 5)

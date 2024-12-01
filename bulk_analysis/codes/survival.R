@@ -22,12 +22,12 @@ df.km <- read_csv(file.path(data.path, "df.km.csv")) |> column_to_rownames("...1
 # ----------------------------------------------------
 # generate figures
 # ----------------------------------------------------
-# EXTENDED FIG 2d ------------------------------------
+# EXTENDED FIG 2e ------------------------------------
 # ----------------------------------------------------
-# EXTENDED FIG 2dA
+# EXTENDED FIG 2eA
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ pEMT_top25_vs_mid50_vs_bottom25, data = df.km)
 
-p.s2dA <- ggsurvplot(fit,
+p.s2eA <- ggsurvplot(fit,
                      risk.table.col = "strata",
                      linetype = "solid",
                      surv.median.line = "h",
@@ -35,15 +35,15 @@ p.s2dA <- ggsurvplot(fit,
                      pval.method = T,
                      ggtheme = theme_classic(),
                      censor = F)
-p.s2dA <- p.s2dA$plot + 
+p.s2eA <- p.s2eA$plot + 
     labs(color = NULL) +
     scale_color_discrete(labels = c("Low", "Medium", "High")) +
     xlab("Time (months)")
 
-# EXTENDED FIG 2dB
+# EXTENDED FIG 2eB
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ Glycolysis.Hypox_top25_vs_mid50_vs_bottom25, data = df.km)
 
-p.s2dB <- ggsurvplot(fit,
+p.s2eB <- ggsurvplot(fit,
                      risk.table.col = "strata",
                      linetype = "solid",
                      surv.median.line = "h",
@@ -51,15 +51,15 @@ p.s2dB <- ggsurvplot(fit,
                      pval.method = T,
                      ggtheme = theme_classic(),
                      censor = F)
-p.s2dB <- p.s2dB$plot + 
+p.s2eB <- p.s2eB$plot + 
     labs(color = NULL) +
     scale_color_discrete(labels = c("Low", "Medium", "High")) +
     xlab("Time (months)")
 
-# EXTENDED FIG 2dC
+# EXTENDED FIG 2eC
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ CC.G2M_top25_vs_mid50_vs_bottom25, data = df.km)
 
-p.s2dC <- ggsurvplot(fit,
+p.s2eC <- ggsurvplot(fit,
                      risk.table.col = "strata",
                      linetype = "solid",
                      surv.median.line = "h",
@@ -67,22 +67,22 @@ p.s2dC <- ggsurvplot(fit,
                      pval.method = T,
                      ggtheme = theme_classic(),
                      censor = F)
-p.s2dC <- p.s2dC$plot + 
+p.s2eC <- p.s2eC$plot + 
     labs(color = NULL) +
     scale_color_discrete(labels = c("Low", "Medium", "High")) +
     xlab("Time (months)")
 
-# patchwork for EXTENDED FIG 2d
-p.s2d <- p.s2dA + p.s2dB + p.s2dC + 
+# patchwork for EXTENDED FIG 2e
+p.s2e <- p.s2eA + p.s2eB + p.s2eC + 
     patchwork::plot_layout(axis_titles = "collect_y", guides = "collect")
 
-ggsave(filename = file.path(figures.dir, "s2d.pdf"), 
-       plot = p.s2d, device = "pdf", width = 3.5 * 3, height = 3)
+ggsave(filename = file.path(figures.dir, "s2e.pdf"), 
+       plot = p.s2e, device = "pdf", width = 3.5 * 3, height = 3)
 
 
-# EXTENDED FIG 7g
+# EXTENDED FIG 8f
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ SPP1_top50_vs_bottom50, data = df.km)
-p.s7g <- ggsurvplot(fit,
+p.s8f <- ggsurvplot(fit,
            # conf.int = TRUE,
            risk.table.col = "strata", # Change risk table color by groups
            linetype = "solid", # Change line type by groups
@@ -93,35 +93,35 @@ p.s7g <- ggsurvplot(fit,
            # palette = c("#E7B800", "#2E9FDF")
            censor = F)
 
-p.s7g <- p.s7g$plot + 
+p.s8f <- p.s8f$plot + 
     labs(color = NULL) +
     scale_color_manual(labels = c("Low SPP1", "High SPP1"),
                        values = c("#0091CA", "#D8423D")) +
     xlab("Time (months)")
 
-ggsave(filename = file.path(figures.dir, "s7g.pdf"), 
-       plot = p.s7g, device = "pdf", width = 3, height = 3.5)
+ggsave(filename = file.path(figures.dir, "s8f.pdf"), 
+       plot = p.s8f, device = "pdf", width = 3, height = 3.5)
 # ----------------------------------------------------
-# EXTENDED FIG 2e
+# EXTENDED FIG 2f
 # ----------------------------------------------------
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ p53_status2, data = df.km)
 print(fit)
 
-p.s2e <- ggsurvplot(fit, 
+p.s2f <- ggsurvplot(fit, 
            # conf.int = TRUE,
            risk.table.col = "strata", # Change risk table color by groups
            pval = T,
            pval.method = T,
            ggtheme = theme_classic(), # Change ggplot2 theme
            )
-p.s2e <- p.s2e$plot + 
+p.s2f <- p.s2f$plot + 
     labs(color = NULL) +
     scale_color_manual(labels = c("TP53 WT", "TP53 mut"),
                        values = c("#0091CA", "#D8423D")) +
     xlab("Time (months)")
 
-ggsave(filename = file.path(figures.dir, "s2e.pdf"), 
-       plot = p.s2e, device = "pdf", width = 3, height = 3.5)
+ggsave(filename = file.path(figures.dir, "s2f.pdf"), 
+       plot = p.s2f, device = "pdf", width = 3, height = 3.5)
 
 # ----------------------------------------------------
 # FIG 2d ---------------------------------------------
