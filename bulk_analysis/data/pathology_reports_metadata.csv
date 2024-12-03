@@ -1,0 +1,24 @@
+﻿sampleIDs,histologicGrade,stage,stageSimplified,primaryTumor,lymphNodeInvolvement
+MGH1170,Poorly differentiated,IIIA,III,pT3,N1a
+MGH1172,Poorly differentiated,IA3,I,pT1c,N0
+MGH1173,Poorly differentiated,IA3,I,pT1c,N0
+MGH1174,Moderately to poorly differentiated,IIB,II,pT3,N0
+MGH1175,NA,IA3,I,pT1c,N0
+MGH1176,Moderately differentiated,IA3,I,pT1c,N0
+MGH1179,Poorly differentiated,IIB,II,pT3,N0
+MGH1181,Moderately to poorly differentiated,IIB,II,pT2a,N1a
+MGH1182,Poorly differentiated,IIA,II,pT2b,N0
+MGH1183,Moderately to poorly differentiated,IIB,II,pT2a,N1b
+BWH01,Moderately differentiated,IB,I,pT2a,N0
+BWH04,Well differentiated,IA2,I,pT1b,N0
+BWH05,Poorly differentiated,IIIA,III,pT2a,N2
+BWH06,Poorly differentiated,IA3,I,pT1c,N0
+BWH09,Moderately differentiated,IIIB,III,pT3,N2
+BWH11,Moderately differentiated,IA3,I,pT1c,N0
+BWH14,Moderately differentiated,IIA,II,pT2b,N0
+BWH16,Moderately differentiated,IB,I,pT2a,N0
+BWH19,Moderately differentiated,IA2,I,pT1b,N0
+BWH23,Moderately differentiated,IA2,I,pT1b,N0
+P14,Moderately differentiated,IIIA,III,pT4,N0(un); pT4 N0(un) MX
+P17,Moderately differentiated,IIA,II,pT2b,N0
+P19,Poorly differentiated,IIIA,III,pT3,N1
