@@ -2,60 +2,34 @@ data.path <- "./data/"
 figures.dir <- "../../figures/"
 system(paste0("mkdir -p ", figures.dir))
 
-library(Seurat)
 library(ggplot2)
 library(ggpubr)
-library(patchwork)
+library(gplots)
+library(data.table)
+
+source(paste0(data.path, "/R_utils/plotutils.R"))
+source(paste0(data.path, "/R_utils/seuratutils.R"))
+source(paste0(data.path, "/R_utils/seuratutilsV3.R"))
+source(paste0(data.path, "/R_utils/color.R"))
 
 load(paste0(data.path, "spatial_list.Rda"))
 
-spatial_list <- spatial_list[c(1:4, 7:16)]
+prop.list <- list()
+for (i in 1:length(spatial_list)) {
+  meta <- spatial_list[[i]]@meta.data[,14:24] # high lvl
+  means <- as.data.frame(t(as.data.frame(colMeans(meta))))
+  prop.list[[i]] <- means
+}
 
-obj <- spatial_list[[1]]
+prop.df <- rbindlist(prop.list)
+prop.df <- as.data.frame(prop.df)
+rownames(prop.df) <- names(spatial_list)
+prop.df <- as.data.frame(t(prop.df))
+Dout <- as.matrix(prop.df)
+my_color_palette <- material.heat(nrow(Dout))
 
-spectral_colors <- scale_fill_gradientn(colors = rev(RColorBrewer::brewer.pal(11, "Spectral")),
-                                        limits = c(0, 1),  # Fix scale limits
-                                        breaks = seq(0, 1, by = 0.2))
-
-plots <- lapply(c("Pericyte", "NK", "Myeloid", "Bcell", "Mast", "Plasma"), function(feature) {
-  plot <- SpatialFeaturePlot(obj, features = feature, 
-                             min.cutoff = 0, 
-                             max.cutoff = 1) +
-    spectral_colors +  # Apply the spectral color palette
-    theme(legend.key.width = unit(1, "cm"),  # Adjust legend width
-          legend.key.height = unit(0.5, "cm")) # Adjust legend height
-  return(plot)
-})
-combined_plot <- wrap_plots(plots)
-
-pdf(paste0(figures.dir, 'EX_FIG_1F.pdf'), useDingbats = F, width = 10, height = 10)
-print(combined_plot)
-dev.off()
-
-plots <- lapply(c("Pericyte", "NK", "Myeloid", "Bcell", "Mast", "Plasma"), function(feature) {
-  plot <- SpatialFeaturePlot(obj, features = feature, alpha=c(0, 0), 
-                             min.cutoff = 0, 
-                             max.cutoff = 1) +
-    spectral_colors +  # Apply the spectral color palette
-    theme(legend.key.width = unit(1, "cm"),  # Adjust legend width
-          legend.key.height = unit(0.5, "cm")) # Adjust legend height
-  return(plot)
-})
-combined_plot <- wrap_plots(plots)
-pdf(paste0(figures.dir, 'EX_FIG_1F_no_spots.pdf'), useDingbats = F, width = 10, height = 10)
-print(combined_plot)
-dev.off()
-
-plots <- lapply(c("Pericyte", "NK", "Myeloid", "Bcell", "Mast", "Plasma"), function(feature) {
-  plot <- SpatialFeaturePlot(obj, features = feature, image.alpha=0, 
-                             min.cutoff = 0, 
-                             max.cutoff = 1) +
-    spectral_colors +  # Apply the spectral color palette
-    theme(legend.key.width = unit(1, "cm"),  # Adjust legend width
-          legend.key.height = unit(0.5, "cm")) # Adjust legend height
-  return(plot)
-})
-combined_plot <- wrap_plots(plots)
-pdf(paste0(figures.dir, 'EX_FIG_1F_no_hist.pdf'), useDingbats = F, width = 10, height = 10)
-print(combined_plot)
+pdf(paste0(figures.dir, 'EX_FIG_1F.pdf'),9,5, useDingbats=FALSE)
+par(mar=c(5, 4.1, 4.1, 2.1))
+barplot2(Dout, main="Cellular composition", legend = rownames(Dout),col = my_color_palette, xlim=c(0, ncol(Dout) + 15), las=2,
+        legend.text=TRUE,args.legend=list(x=ncol(Dout)+15,y=max(colSums(Dout)),bty = "n"))
 dev.off()
