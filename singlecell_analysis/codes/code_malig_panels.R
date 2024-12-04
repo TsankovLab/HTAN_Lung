@@ -630,6 +630,7 @@ mean.plots.2[[3]] = mean.plots[[3]]   ## CC.G2M
 
 ###
 pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig4F.pdf"), width = 12, height = 5, useDingbats=FALSE)
+cowplot::plot_grid(plotlist = mean.plots.2, ncol=3)
 dev.off()
 
 
@@ -715,6 +716,11 @@ mean.plot <- ggviolin(comp.df, x = "status", y = "HIF1A", color = "black", fill 
   rotate_x_text(angle = 45) + NoLegend() +
   stat_compare_means(comparisons = my_comparisons)
 
+############# 
+pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig5A.pdf"), width = 5, height = 5, useDingbats=FALSE)
+mean.plot
+dev.off()
+
 
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
@@ -723,8 +729,6 @@ mean.plot <- ggviolin(comp.df, x = "status", y = "HIF1A", color = "black", fill 
 res = get(load(paste0(data.path, "ccat.df.malig.subset.Rda")))
 
 #
-res = data@meta.data[,c("ccat.v", "subtype")]
-
 subtype = unique(res$subtype)
 res.ann = matrix(nrow=length(subtype), ncol = 2)
 rownames(res.ann) = subtype
