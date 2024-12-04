@@ -12,7 +12,7 @@ library(ggpubr)
 # ----------------------------------------------------
 # set directories
 # ----------------------------------------------------
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 system(paste0("mkdir -p ", figures.dir))
 # ----------------------------------------------------
@@ -22,9 +22,9 @@ df.km <- read_csv(file.path(data.path, "df.km.csv")) |> column_to_rownames("...1
 # ----------------------------------------------------
 # generate figures
 # ----------------------------------------------------
-# EXTENDED FIG 2e ------------------------------------
+# EXTENDED FIG 3e ------------------------------------
 # ----------------------------------------------------
-# EXTENDED FIG 2eA
+# EXTENDED FIG 3eA
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ pEMT_top25_vs_mid50_vs_bottom25, data = df.km)
 
 p.s2eA <- ggsurvplot(fit,
@@ -76,7 +76,7 @@ p.s2eC <- p.s2eC$plot +
 p.s2e <- p.s2eA + p.s2eB + p.s2eC + 
     patchwork::plot_layout(axis_titles = "collect_y", guides = "collect")
 
-ggsave(filename = file.path(figures.dir, "s2e.pdf"), 
+ggsave(filename = file.path(figures.dir, "s3e.pdf"), 
        plot = p.s2e, device = "pdf", width = 3.5 * 3, height = 3)
 
 
@@ -102,7 +102,7 @@ p.s8f <- p.s8f$plot +
 ggsave(filename = file.path(figures.dir, "s8f.pdf"), 
        plot = p.s8f, device = "pdf", width = 3, height = 3.5)
 # ----------------------------------------------------
-# EXTENDED FIG 2f
+# EXTENDED FIG 3f
 # ----------------------------------------------------
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ p53_status2, data = df.km)
 print(fit)
@@ -120,7 +120,7 @@ p.s2f <- p.s2f$plot +
                        values = c("#0091CA", "#D8423D")) +
     xlab("Time (months)")
 
-ggsave(filename = file.path(figures.dir, "s2f.pdf"), 
+ggsave(filename = file.path(figures.dir, "s3f.pdf"), 
        plot = p.s2f, device = "pdf", width = 3, height = 3.5)
 
 # ----------------------------------------------------

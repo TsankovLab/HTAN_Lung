@@ -8,7 +8,7 @@ library(tidyverse)
 # ----------------------------------------------------
 # set directories
 # ----------------------------------------------------
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 system(paste0("mkdir -p ", figures.dir))
 # ----------------------------------------------------

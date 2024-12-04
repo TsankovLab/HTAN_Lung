@@ -28,7 +28,7 @@ other <- c("19", "1181", "1179", "1170", "17")
 total.samples <- c(p53.filt, WT.filt, other)
 
 # my outputs
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 
 if (!file.exists(paste0(figures.dir,'Fig1_overview/'))){dir.create(paste0(figures.dir,'Fig1_overview/'), recursive=TRUE)}
@@ -47,7 +47,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 
 ##########
 # load all obj
-all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -103,7 +103,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1D
-all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -140,7 +140,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1E
-malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
 
 maligv9.allsamples = malig
 
@@ -204,7 +204,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1F and Extended 1D
-all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -215,6 +215,8 @@ all$celltype_2[which(all$subtype %in% c("CAF.ADH1B", "Myofibroblast", "CAF.Compl
                                         "CAF.COL", "CAF.Ribo", "CAF.Adventitial", 
                                         "CAF.APOE.IGFBP", "CAF.ISG", "CAF.Cycling"))] = "CAF"
 all$celltype_2[which(all$subtype %in% c("Pericyte.EMT", "SmoothMuscle.Airway", "SmoothMuscle.Vascular"))] = "SmoothMuscle"
+
+all.v2.meta = all@meta.data
 
 CD4T_ID = rownames(all.v2.meta)[which(all.v2.meta$subtype %in% c("CD4.Naive.CM", "CD4.TRM","Treg", "TFH"))]
 CD8T_ID = rownames(all.v2.meta)[which(all.v2.meta$subtype %in% c("CD8.IFN", "CD8.GZMK", "CD8.TRM", "T.Exhausted"))]
@@ -343,34 +345,22 @@ p<-pheatmap(info, cluster_rows = F, cluster_cols = F,
 p
 dev.off()
 
-############ Extended figure 1A source file
-write.csv(info, file = paste0(source.data.dir, "Fig1_overview/Ext_Fig1A_sourcedata.csv"), row.names = FALSE)
-
-
-
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 1B
-all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 ############
-pdf(file = paste0(figures.dir, "Fig1_overview_V2/Ext_Fig1B.pdf"), useDingbats = F, width = 8)
+pdf(file = paste0(figures.dir, "Fig1_overview/Ext_Fig1B.pdf"), useDingbats = F, width = 8)
 DimPlot(all, group.by = "orig.identSec")
 dev.off()
-
-
-############ figure 1B source file
-p_data <- Embeddings(all, reduction = "umap")
-p_data <- as.data.frame(p_data)
-p_data$patientID <- all$orig.identSec
-write.csv(p_data, paste0(source.data.dir, "Fig1_overview/Ext_Fig1B_sourcedata.csv"), row.names = F)
 
 
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 1C
-all = get(load("./dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -408,7 +398,3 @@ pdf(paste0(figures.dir, "Fig1_overview/Ext_Fig1C.pdf"), height = 5, width = 10, 
 barplot2(Dout, main="Cell type composition", legend = rownames(Dout),col = my_color_palette, xlim=c(0, ncol(Dout) + 15), las=2,
          legend.text=TRUE,args.legend=list(x=ncol(Dout)+15,y=max(colSums(Dout)),bty = "n"))
 dev.off()
-
-
-############ Extended figure 1C source file
-write.csv(Dout, file = paste0(source.data.dir, "Fig1_overview/Ext_Fig1C_sourcedata.csv"))

@@ -24,7 +24,7 @@ other <- c("19", "1181", "1179", "1170", "17")
 total.samples <- c(p53.filt, WT.filt, other)
 
 # my outputs
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 
 if (!file.exists(paste0(figures.dir,'Fig3_stroma/'))){dir.create(paste0(figures.dir,'Fig3_stroma/'), recursive=TRUE)}

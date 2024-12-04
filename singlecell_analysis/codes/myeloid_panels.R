@@ -17,7 +17,7 @@ library(readxl)
 library(tidyverse)
 
 # my outputs
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 my.dir = '/ahg/regevdata/projects/ICA_Lung/Thinh/Projects/Workspace/Processed/p53.revision.oct2024/'
 #figures.dir = paste0(my.dir, 'plots/')

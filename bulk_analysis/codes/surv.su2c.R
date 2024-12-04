@@ -7,7 +7,7 @@ library(survival)
 library(forestplot)
 
 # my outputs
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 
 if (!file.exists(paste0(figures.dir,'Fig6/'))){dir.create(paste0(figures.dir,'Fig6/'), recursive=TRUE)}
@@ -30,8 +30,8 @@ clin = clin[se,]
 rownames(clin) = clin$Harmonized_SU2C_WES_Tumor_Sample_ID_v2
 
 ########
-p53 = get(load(paste0(data.path, "su2c.mut.info.p53.Rda"))
-mymut = get(load(paste0(data.path, "su2c.mut.info.selectgenes1.Rda"))
+p53 = get(load(paste0(data.path, "su2c.mut.info.p53.Rda")))
+mymut = get(load(paste0(data.path, "su2c.mut.info.selectgenes1.Rda")))
 
 old.clin = clin
 all(rownames(clin) == rownames(p53))

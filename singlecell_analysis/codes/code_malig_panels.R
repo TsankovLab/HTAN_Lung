@@ -28,7 +28,7 @@ other <- c("19", "1181", "1179", "1170", "17")
 total.samples <- c(p53.filt, WT.filt, other)
 
 # my outputs
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 
 if (!file.exists(paste0(figures.dir,'Fig2_malig/'))){dir.create(paste0(figures.dir,'Fig2_malig/'), recursive=TRUE)}
@@ -44,7 +44,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2A
-malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
 
 Idents(malig)  <- "subtype"
 malig.names<-c("AT2.like", "AT1.2.like", "CC.G2M", "CC.S", "Ciliated", 
@@ -64,7 +64,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2B
-malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
 
 genes <- c("SFTPA2", "SFTPA1", "SFTPC", "AKR1C1", "PTTG1", "CDKN3", "HIST1H4C", "PCNA", "CAPS", "CETN2", "PKM", "LDHA", "HLA-DRA", "HLA-DPA1", 'NDRG1',
            "SLC2A1", "ISG15", "IFI6", "HSPA1A", "JUN", "MT-ND5", "MT-ND6", "MT2A", "MT1X", "ATP5I", "SEPP1", "LAMC2", "VIM", "RPL32", "RPL29","LCN2", "SLPI", "S100A4", "KRT19", "NFKBIA", "CXCL2")
@@ -120,7 +120,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2E (left)
-malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
 
 maligv9.allsamples = malig
 
@@ -303,10 +303,10 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 3A
-malig <- get(load("./dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
 
 ###########
-pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig2A.pdf"), useDingbats = F, width = 10)
+pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig3A.pdf"), useDingbats = F, width = 10)
 p = DimPlot(malig, group.by = "orig.identSec")
 p
 dev.off()
@@ -341,7 +341,7 @@ xx <- compareCluster(gene ~ cluster, data = deg.epi, fun = enricher,
 ########### 
 p <- dotplot(xx, x="cluster") + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
                                       axis.text.y = element_text(size = 6, vjust = 0.5, hjust=1))
-pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig2B.pdf"), useDingbats = F, width = 8, height = 10)
+pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig3B.pdf"), useDingbats = F, width = 8, height = 10)
 print(p)
 dev.off()
 
@@ -360,7 +360,7 @@ ann = c("Glycolysis.Hypox","Metallothionein","Hypoxia","CC.G2M", "CC.S","PEMT","
 res.ann = res[ann,ann]
 
 
-pdf(paste0(figures.dir,"Fig2_malig/Ext_Fig2C.pdf"), width = 10, height = 9, useDingbats=F)
+pdf(paste0(figures.dir,"Fig2_malig/Ext_Fig3C.pdf"), width = 10, height = 9, useDingbats=F)
 p<-Heatmap(res.ann, cluster_rows = F, cluster_columns = F)
 p
 dev.off()
@@ -390,7 +390,7 @@ rownames(res2) = c("AT1.2.like", "Respiration.MT", "MHCII", "AT2.like", "StressR
                    "CC.G2M")
 
 ############
-pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig3D_newfigname.pdf"), width = 10, height = 8) 
+pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig3D.pdf"), width = 10, height = 8) 
 Heatmap(res2, cluster_rows = F, cluster_columns = F, name = "Pearson.cor")
 dev.off()
 
@@ -630,6 +630,7 @@ mean.plots.2[[3]] = mean.plots[[3]]   ## CC.G2M
 
 ###
 pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig4F.pdf"), width = 12, height = 5, useDingbats=FALSE)
+dev.off()
 
 
 

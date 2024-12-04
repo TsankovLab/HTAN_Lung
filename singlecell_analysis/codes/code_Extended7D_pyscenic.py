@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from pyscenic.rss import regulon_specificity_scores
 
-DATA_INPUT = "./data/"
+DATA_INPUT = "../data/"
 FIGURES_FOLDERNAME = "../../figures/Fig3_stroma/"
 
 sc.settings.figdir = FIGURES_FOLDERNAME
