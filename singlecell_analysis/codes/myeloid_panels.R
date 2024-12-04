@@ -203,28 +203,8 @@ corr <- corr[order(-corr[,"SPP1"]),]
 
 
 
-#### F4G ####
-all = get (load (file.path('../dropbox_data','all.merge.new.cci.nodoublets.v4.Rda')))
-
-genes <- c("CXCR3", "CXCL11")
-
-# all <- NormalizeData(all)
-
-Idents(all) <- "celltype"
-Idents(all) = factor (Idents(all), levels = rev(c('Malignant','Nonmalig Epi','Endothelial','Mesenchymal','Pericyte','Mast','Bcell','Plasma','NK','Tcell','Myeloid')))
-# Idents(all) <- "subtype"
-pdf(file.path(figures.dir,'F4G.pdf'), useDingbats = F, width = 4, height = 4)
-  dp = DotPlot(object = all, features = genes, scale = T) +
-  theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) +
-    scale_colour_gradient2(low = "navy", high = "firebrick") +
-    geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
-    dp
-dev.off()
-###
-
-
 #### F4E ####
-myeloid = readRDS (file.path ('../dropbox_data','myeloid_pDC_mast_integrated.rds'))
+#myeloid = readRDS (file.path ('../dropbox_data','myeloid_pDC_mast_integrated.rds'))
 ### add module score for emt and hypoxia 
 hypoxia.hallmark <- c("ACKR3","ADM","ADORA2B","AK4","AKAP12","ALDOA","ALDOB","ALDOC","AMPD3","ANGPTL4","ANKZF1","ANXA2","ATF3","ATP7A","B3GALT6","B4GALNT2","BCAN","BCL2","BGN","BHLHE40","BNIP3L","BRS3","BTG1","CA12","CASP6","CAV1","CAVIN1","CAVIN3","CCN1","CCN2","CCN5","CCNG2","CDKN1A","CDKN1B","CDKN1C","CHST2","CHST3","CITED2","COL5A1","CP","CSRP2","CXCR4","DCN","DDIT3","DDIT4","DPYSL4","DTNA","DUSP1","EDN2","EFNA1","EFNA3","EGFR","ENO1","ENO2","ENO3","ERO1A","ERRFI1","ETS1","EXT1","F3","FAM162A","FBP1","FOS","FOSL2","FOXO3","GAA","GALK1","GAPDH","GAPDHS","GBE1","GCK","GCNT2","GLRX","GPC1","GPC3","GPC4","GPI","GRHPR","GYS1","HAS1","HDLBP","HEXA","HK1","HK2","HMOX1","HOXB9","HS3ST1","HSPA5","IDS","IER3","IGFBP1","IGFBP3","IL6","ILVBL","INHA","IRS2","ISG20","JMJD6","JUN","KDELR3","KDM3A","KIF5A","KLF6","KLF7","KLHL24","LALBA","LARGE1","LDHA","LDHC","LOX","LXN","MAFF","MAP3K1","MIF","MT1E","MT2A","MXI1","MYH9","NAGK","NCAN","NDRG1","NDST1","NDST2","NEDD4L","NFIL3","NOCT","NR3C1","P4HA1","P4HA2","PAM","PCK1","PDGFB","PDK1","PDK3","PFKFB3","PFKL","PFKP","PGAM2","PGF","PGK1","PGM1","PGM2","PHKG1","PIM1","PKLR","PKP1","PLAC8","PLAUR","PLIN2","PNRC1","PPARGC1A","PPFIA4","PPP1R15A","PPP1R3C","PRDX5","PRKCA","PYGM","RBPJ","RORA","RRAGD","S100A4","SAP30","SCARB1","SDC2","SDC3","SDC4","SELENBP1","SERPINE1","SIAH2","SLC25A1","SLC2A1","SLC2A3","SLC2A5","SLC37A4","SLC6A6","SRPX","STBD1","STC1","STC2","SULT2B1","TES","TGFB3","TGFBI","TGM2","TIPARP","TKTL1","TMEM45A","TNFAIP3","TPBG","TPD52","TPI1","TPST2","UGP2","VEGFA","VHL","VLDLR","WSB1","XPNPEP1","ZFP36","ZNF292")
 
@@ -363,6 +343,24 @@ p
 dev.off()
 
 
+#### F4G ####
+all = get (load (file.path('../dropbox_data','all.merge.new.cci.nodoublets.v4.Rda')))
+
+genes <- c("CXCR3", "CXCL11")
+
+# all <- NormalizeData(all)
+
+Idents(all) <- "celltype"
+#Idents(all) = factor (Idents(all), levels = rev(c('Malignant','Nonmalig Epi','Endothelial','Mesenchymal','Pericyte','Mast','Bcell','Plasma','NK','Tcell','Myeloid')))
+# Idents(all) <- "subtype"
+pdf(file.path(figures.dir,'F4G.pdf'), useDingbats = F, width = 4, height = 4)
+  dp = DotPlot(object = all, features = genes, scale = T) +
+  theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) +
+    scale_colour_gradient2(low = "navy", high = "firebrick") +
+    geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
+    dp
+dev.off()
+###
 
 
 ### F4H ####
@@ -450,7 +448,7 @@ dev.off()
 
 
 
-### S7A ####
+### S8A ####
 meta_df = table (data.frame (sample = myeloid$orig.identSec, subtype = myeloid$subtype))
 meta_df = as.data.frame (prop.table (meta_df, 1))
 meta_df$sample = factor(meta_df$sample, levels = c(
@@ -490,7 +488,7 @@ bp = ggplot (meta_df, aes (x = sample, y = Freq, fill = subtype)) +
     #panel.grid.minor = element_blank()
   )
 
-pdf (file.path (figures.dir,'S7A.pdf'), height=4)
+pdf (file.path (figures.dir,'S8A.pdf'), height=4)
 bp
 dev.off()
 
@@ -498,27 +496,28 @@ dev.off()
 
 
 ### S8H ####
-Idents(myeloid) <- "subtype"
-markers <- FindAllMarkers(myeloid, only.pos = T, max.cells.per.ident = 1000)
+#Idents(myeloid) <- "subtype"
+#markers <- FindAllMarkers(myeloid, only.pos = T, max.cells.per.ident = 1000)
 
-markers <- myeloid.markers
-markers[,"cluster"] <- as.character(markers[,"cluster"]) # in case this is a factor
+#markers <- myeloid.markers
+#markers[,"cluster"] <- as.character(markers[,"cluster"]) # in case this is a factor
 
-library(dplyr)
+#library(dplyr)
 
-markers <- markers %>%
-  arrange(cluster, desc(avg_log2FC)) %>% 
-  group_by(cluster) %>%
-  slice(1:10)
+#markers <- markers %>%
+#  arrange(cluster, desc(avg_log2FC)) %>% 
+#  group_by(cluster) %>%
+#  slice(1:10)
   
 
 # dir.create(paste0(figures.dir, "Figures_v4/Fig5_myeloid_bmast/"))
 #write.csv(markers, file = file.path(projdir, "S7_I_myeloid.markers.top10.csv"))
 
-order <- rev(unique(markers$cluster)) # already sorted
+#order <- rev(unique(markers$cluster)) # already sorted
 
-Idents(myeloid) <- factor(Idents(myeloid), levels = order)
-genes <- unique(markers$gene)
+#Idents(myeloid) <- factor(Idents(myeloid), levels = order)
+#genes <- unique(markers$gene)
+
 Idents(myeloid) <- "subtype"
 Idents (myeloid) = factor (Idents(myeloid), levels = rev(c(
   'TAM.FABP4',
@@ -570,7 +569,7 @@ mye_markers = unlist(strsplit(mye_markers,'\n'))
 DefaultAssay (myeloid) = 'RNA'
 myeloid <- ScaleData(myeloid, features = c(VariableFeatures(myeloid),mye_markers)) # add genes of interest to the heatmap
 
-pdf(file.path(figures.dir, 'reproducing_figures','S7I.pdf'), useDingbats = F, width = 10, height = 6)
+pdf(file.path(figures.dir, 'S8H.pdf'), useDingbats = F, width = 10, height = 6)
  dp= DotPlot(object = myeloid, features = mye_markers, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
     #scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
@@ -590,6 +589,6 @@ top_cor_genes = top_cor_genes[rownames(top_cor_genes) != gene,,drop=F]
 top_cor_genes$gene = factor (rownames(top_cor_genes), levels = rev(rownames(top_cor_genes)))
 bp = ggplot (top_cor_genes, aes (x = SPP1, y = gene)) + geom_bar(stat = 'identity') + theme_classic()
 
-pdf (file.path (figures.dir, 'reproducing_figures', 'S7H.pdf'))
+pdf (file.path (figures.dir, 'S8G.pdf'))
 bp
 dev.off()
