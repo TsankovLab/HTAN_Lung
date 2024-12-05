@@ -617,7 +617,7 @@ for (subtype in subtypes){
   mean.plot <- ggviolin(comp.df, x = "impact", y = subtype, color = "black", fill = "impact",
                         title = subtype, palette = my_color_palette,
                         add = "boxplot", add.params = list(fill = "white"))+
-    rotate_x_text(angle = 45) + NoLegend()
+    rotate_x_text(angle = 45) + NoLegend() +
   stat_compare_means(comparisons = my_comparisons)
   mean.plots[[subtype]] <- mean.plot
 }
@@ -717,7 +717,7 @@ mean.plot <- ggviolin(comp.df, x = "status", y = "HIF1A", color = "black", fill 
   stat_compare_means(comparisons = my_comparisons)
 
 ############# 
-pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig5A.pdf"), width = 5, height = 5, useDingbats=FALSE)
+pdf(paste0(figures.dir, "Fig2_malig/Ext_Fig5A_right.pdf"), width = 5, height = 5, useDingbats=FALSE)
 mean.plot
 dev.off()
 
