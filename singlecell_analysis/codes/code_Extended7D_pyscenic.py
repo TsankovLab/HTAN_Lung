@@ -5,9 +5,11 @@ import scanpy as sc
 import matplotlib.pyplot as plt
 
 from pyscenic.rss import regulon_specificity_scores
+from pyscenic.plotting import plot_rss
 
 DATA_INPUT = "../data/"
 FIGURES_FOLDERNAME = "../../figures/Fig3_stroma/"
+os.makedirs(FIGURES_FOLDERNAME, exist_ok=True)
 
 sc.settings.figdir = FIGURES_FOLDERNAME
 
