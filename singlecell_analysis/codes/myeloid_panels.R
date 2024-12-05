@@ -1,5 +1,4 @@
 library(Seurat)
-library(pals)
 library(RColorBrewer)
 library(ggplot2)
 library(scales)
@@ -27,11 +26,6 @@ source(paste0(data.path, "/R_utils/seuratutils.R"))
 source(paste0(data.path, "/R_utils/seuratutilsV3.R"))
 source(paste0(data.path, "/R_utils/color.R"))
 
-#Genesets
-cc.genes <- readLines(con = paste0(user.path, "/genelists/regev_lab_cell_cycle_genes.txt"))
-s.genes <- cc.genes[1:43]
-g2m.genes <- cc.genes[44:97]
-
 myeloid = readRDS (file.path ('../dropbox_data','myeloid_pDC_mast_integrated.rds'))#myeloid = NormalizeData (myeloid)
 ###
 
@@ -47,8 +41,10 @@ total.samples <- c(p53.filt, WT.filt, other)
 
 
 #### F4A ####
+pdf(paste0(figures.dir, "F4_A.pdf"), useDingbats = F, width = 8)
 DimPlot(myeloid, group.by = "subtype")
-ggsave(file.path(figures.dir,'F4_A.png'))
+dev.off()
+#ggsave(file.path(figures.dir,'F4_A.png'))
 
 
 #### F4B ####            
@@ -71,8 +67,10 @@ custom_color_scale <- scale_color_gradientn(
 p <- lapply(p, function (x) x + custom_color_scale)
 for(i in 1:length(p)) {p[[i]] <- p[[i]] + NoLegend() + NoAxes()}
 
+pdf(paste0(figures.dir, "F4_B.pdf"), useDingbats = F, width = 14, height = 7)
 cowplot::plot_grid(plotlist = p, ncol=6)
-ggsave(file.path(figures.dir,'myeloid.fp.spectral.max4.v2_rep2.png'), width = 14, height = 7)
+dev.off()
+#ggsave(file.path(figures.dir,'myeloid.fp.spectral.max4.v2_rep2.png'), width = 14, height = 7)
 
 #write.csv (do.call (cbind, lapply(p, function(x) x$data)), file.path (projdir, 'F4_B.csv'))
 ### feature plots are not space efficient

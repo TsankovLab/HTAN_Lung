@@ -1,35 +1,44 @@
-library (Seurat)
-library(pals)
+library(Seurat)
 library(RColorBrewer)
 library(ggplot2)
 library(scales)
 library(dplyr)
+library(ggpubr)
+library(tidyverse)
+library(data.table)
+library(pheatmap)
 
 # # Load Lymphoid object
 # figures.dir <- paste0(proj.path, "/Results/10x_All_190615/Immune.LymTnG400v11/")
 # load(file = paste0(figures.dir, "tcell.final.nodoublets.Rda")) # lymphoid
 
-### Set paths ####
-data.path <- file.path('..','data')
+# my outputs
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 
-### Load functions ####
-source(file.path(data.path, "R_utils','plotutils.R"))
-source(file.path(data.path, "R_utils','seuratutils.R"))
-source(file.path(data.path, "R_utils','seuratutilsV3.R"))
-source(file.path(data.path, "R_utils','color.R"))
+
+######
+source(paste0(data.path, "/R_utils/plotutils.R"))
+source(paste0(data.path, "/R_utils/seuratutils.R"))
+source(paste0(data.path, "/R_utils/seuratutilsV3.R"))
+source(paste0(data.path, "/R_utils/color.R"))
 
 ### Load data ####
-tcell = readRDS (file.path ('../dropbox_data','NKTcells.rds'))
+#tcell = readRDS (file.path ('../dropbox_data','NKTcells.rds'))
+tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
 load(file = file.path ('../dropbox_data', 'bcell.final.nodoublets.Rda')) # bmast
 tnk <- get(load(file.path('../dropbox_data','tnk.validation.Rda'))) # validation cohort
 
 
 
 #### F5AB ####
+pdf(paste0(figures.dir, "F5A.pdf"), useDingbats = F, width = 7, height = 7)
 dp = DimPlot (tcell, group.by = 'subtype')
 dp
-ggsave(file.path(figures.dir, "F5A.png"), width = 7, height = 7)
+dev.off()
+#ggsave(file.path(figures.dir, "F5A.png"), width = 7, height = 7)
+
+
 
 colors <- material.heat(11)
 colors <- jet.colors(100)
@@ -58,14 +67,16 @@ custom_color_scale <- scale_color_gradientn(
 p <- lapply(p, function (x) x + custom_color_scale)
 for(i in 1:length(p)) {p[[i]] <- p[[i]] + NoLegend() + NoAxes()}
 
-
+pdf(paste0(figures.dir, "F5B.pdf"), useDingbats = F, width = 15, height = 15)
 cowplot::plot_grid(plotlist = p, ncol=3)
-ggsave(file.path(figures.dir, "F5B.png"), width = 15, height = 15)
+dev.off()
+#ggsave(file.path(figures.dir, "F5B.png"), width = 15, height = 15)
+
 
 ### feature plots are not space efficient
 #write.csv (do.call (cbind, lapply(p,function(x) x$data)), file.path (projdir, 'F5_A_B.csv'))
 
-#### F5C_S8C ####
+#### F5C_S9C ####
 p53 <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
 WT <- c("14", "1174", "1176", "1183", "BW01", "BW04", "BW05", "BW09", "BW19", "BW23")
 p53.filt <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
@@ -97,11 +108,64 @@ for (subtype in subtypes){
 }
 
             
-pdf(file.path(figures.dir,'F5C_S8C.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
+pdf(file.path(figures.dir,'F5C_S9C.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
 cowplot::plot_grid(plotlist = mean.plots, ncol=8)
 dev.off()
 
 #write.csv (do.call (cbind, lapply (mean.plots, function(x) x$data)), file.path(projdir, 'F5_C_S8_C.csv'))
+
+
+#### S9C_continue ####    
+
+comp.df <- as.matrix(table(tnk$sampleID, tnk$predicted.id))
+comp.df  <- prop.table(comp.df , 1)
+comp.df <- as.data.frame.matrix(comp.df)
+comp.df$p53_status = tnk$p53_status[match(rownames(comp.df), tnk$sampleID)]
+comp.df$p53_status <- factor(comp.df$p53_status, levels = c("WT", "mut"))
+
+subtypes <- colnames(comp.df)
+for (subtype in subtypes){
+  mean.plot <- ggboxplot(comp.df, x = "p53_status", y = subtype, color = "p53_status",
+               palette = c("#0091CA", "#D8423D"), add = "jitter",
+               title = subtype) +
+               # ylim(-.5,.5) +
+               stat_compare_means(label.x = 0.9, label.y = .9 * max(as.numeric(comp.df[,subtype]))) +
+               # stat_compare_means(label.x = 0.9, label.y = max(module.scores[,module])*(9.0/10), method = "t.test") +
+               theme(plot.title = element_text(size = 12, face = "bold")) + NoLegend()
+  #ggsave(paste0(figures.dir.p53, "median.module.scores.v3.top20.png"), width = 6, height = 6, type="cairo")
+  mean.plots[[subtype]] <- mean.plot
+}
+
+#figures.dir <- paste0(proj.path, "/Results/10x_All_190615/P53_paper/")
+# myeloid subtype boxplots
+pdf(file.path(figures.dir,'S9C_validation_cohort.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
+cowplot::plot_grid(plotlist = mean.plots, ncol=8)
+dev.off()
+
+#write.csv (do.call (cbind, lapply (mean.plots[c('T.Exhausted','TFH')], function(x) x$data)), file.path (projdir, 'S8_C.csv'))
+
+comp.df = rbind (comp.df_disc[,c('p53_status','TFH')], comp.df[,c('p53_status','TFH')])
+comp.df$p53_status[comp.df$p53_status == 'mut']= 'p53_mut'
+
+
+subtype= 'TFH'
+  mean.plot <- ggboxplot(comp.df, x = "p53_status", y = subtype, color = "p53_status",
+               palette = c("#0091CA", "#D8423D"), add = "jitter",
+               title = subtype) +
+               # ylim(-.5,.5) +
+               stat_compare_means(label.x = 0.9, label.y = .9 * max(as.numeric(comp.df[,subtype]))) +
+               # stat_compare_means(label.x = 0.9, label.y = max(module.scores[,module])*(9.0/10), method = "t.test") +
+               theme(plot.title = element_text(size = 12, face = "bold")) + NoLegend()
+  #ggsave(paste0(figures.dir.p53, "median.module.scores.v3.top20.png"), width = 6, height = 6, type="cairo")
+  #mean.plots[[subtype]] <- mean.plot
+
+        
+pdf(file.path(figures.dir,'S9C_TFH_combined.pdf'), width = 3, height = 3.5)
+mean.plot
+dev.off()
+
+#write.csv (mean.plot$data, file.path (projdir, 'S8_C_cohort_TFH_combined.csv'))
+
 
 
 ### F5D ####
@@ -162,7 +226,7 @@ p.bar.t_myeloid <- df2 |>
 
 # generate patchwork for bar plots
 p.5d.bar <- p.bar.t_malig + p.bar.t_myeloid + patchwork::plot_layout(ncol = 1, heights = c(1, 11/8))
-ggsave(filename = file.path(figures.dir, "5d_bar.pdf"), 
+ggsave(filename = file.path(figures.dir, "F5D_bar.pdf"), 
        plot = p.5d.bar, 
        device = "pdf", 
        width = 5, 
@@ -241,7 +305,7 @@ p.t_myeloid <- comb.df.filtered |>
 p.5d.dot <- patchwork::wrap_plots(p.t_malig, p.t_myeloid, nrow = 2) + patchwork::plot_layout(heights = c(1, 11/8))
 p.5d.dot
 
-ggsave(filename = file.path(figures.dir, "5d_dot.pdf"), 
+ggsave(filename = file.path(figures.dir, "F5D_dot.pdf"), 
        plot = p.5d.dot, 
        device = "pdf", 
        width = 10, 
@@ -250,56 +314,6 @@ ggsave(filename = file.path(figures.dir, "5d_dot.pdf"),
 
 
 
-#### S8C ####    
-
-comp.df <- as.matrix(table(tnk$sampleID, tnk$predicted.id))
-comp.df  <- prop.table(comp.df , 1)
-comp.df <- as.data.frame.matrix(comp.df)
-comp.df$p53_status = tnk$p53_status[match(rownames(comp.df), tnk$sampleID)]
-comp.df$p53_status <- factor(comp.df$p53_status, levels = c("WT", "mut"))
-
-subtypes <- colnames(comp.df)
-for (subtype in subtypes){
-  mean.plot <- ggboxplot(comp.df, x = "p53_status", y = subtype, color = "p53_status",
-               palette = c("#0091CA", "#D8423D"), add = "jitter",
-               title = subtype) +
-               # ylim(-.5,.5) +
-               stat_compare_means(label.x = 0.9, label.y = .9 * max(as.numeric(comp.df[,subtype]))) +
-               # stat_compare_means(label.x = 0.9, label.y = max(module.scores[,module])*(9.0/10), method = "t.test") +
-               theme(plot.title = element_text(size = 12, face = "bold")) + NoLegend()
-  #ggsave(paste0(figures.dir.p53, "median.module.scores.v3.top20.png"), width = 6, height = 6, type="cairo")
-  mean.plots[[subtype]] <- mean.plot
-}
-
-#figures.dir <- paste0(proj.path, "/Results/10x_All_190615/P53_paper/")
-# myeloid subtype boxplots
-pdf(file.path(figures.dir,'S8_C_validation_cohort.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
-cowplot::plot_grid(plotlist = mean.plots, ncol=8)
-dev.off()
-
-#write.csv (do.call (cbind, lapply (mean.plots[c('T.Exhausted','TFH')], function(x) x$data)), file.path (projdir, 'S8_C.csv'))
-
-comp.df = rbind (comp.df_disc[,c('p53_status','TFH')], comp.df[,c('p53_status','TFH')])
-comp.df$p53_status[comp.df$p53_status == 'mut']= 'p53_mut'
-
-
-subtype= 'TFH'
-  mean.plot <- ggboxplot(comp.df, x = "p53_status", y = subtype, color = "p53_status",
-               palette = c("#0091CA", "#D8423D"), add = "jitter",
-               title = subtype) +
-               # ylim(-.5,.5) +
-               stat_compare_means(label.x = 0.9, label.y = .9 * max(as.numeric(comp.df[,subtype]))) +
-               # stat_compare_means(label.x = 0.9, label.y = max(module.scores[,module])*(9.0/10), method = "t.test") +
-               theme(plot.title = element_text(size = 12, face = "bold")) + NoLegend()
-  #ggsave(paste0(figures.dir.p53, "median.module.scores.v3.top20.png"), width = 6, height = 6, type="cairo")
-  #mean.plots[[subtype]] <- mean.plot
-
-        
-pdf(file.path(figures.dir,'S8C.pdf'), width = 3, height = 3.5)
-mean.plot
-dev.off()
-
-#write.csv (mean.plot$data, file.path (projdir, 'S8_C_cohort_TFH_combined.csv'))
 
 
 
@@ -448,15 +462,15 @@ dev.off()
 #write.csv (sums, file.path (projdir, 'F5_H_cycling_cells.csv'))
 
 #### S9A ####            
-Idents(tcell) <- "subtype"
-markers <- FindAllMarkers(tcell, only.pos = T, max.cells.per.ident = 1000)
+# Idents(tcell) <- "subtype"
+# markers <- FindAllMarkers(tcell, only.pos = T, max.cells.per.ident = 1000)
 
-markers[,"cluster"] <- as.character(markers[,"cluster"]) # in case this is a factor
+# markers[,"cluster"] <- as.character(markers[,"cluster"]) # in case this is a factor
 
-markers <- markers %>%
-  arrange(cluster, desc(avg_log2FC)) %>% 
-  group_by(cluster) %>%
-  dplyr::slice(1:10)
+# markers <- markers %>%
+#   arrange(cluster, desc(avg_log2FC)) %>% 
+#   group_by(cluster) %>%
+#   dplyr::slice(1:10)
   
 
 # dir.create(paste0(figures.dir, "Figures_v4/Fig5_myeloid_bmast/"))
@@ -495,18 +509,21 @@ genes <- c(
   "FOXP3")
 #genes <- unique(markers$gene)
 
+tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
 tcell <- FindVariableFeatures(tcell)
 tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
 
 data <- tcell[,sample(colnames(tcell), 500)][["RNA"]]@data[genes,]
 data <- as.matrix(data)
 
+Idents(tcell) <- "subtype"
+Idents(tcell) = factor (Idents(tcell), levels = rev (c('CD4.Naive.CM','CD4.TRM','CD8.GZMK','CD8.IFN','CD8.TRM','NK.CD56.bright','NK.CD56.dim','NKT','T.Cycling','T.Exhausted','TFH','T.Stress','Treg')))
 dp = DotPlot(object = tcell, features = genes, scale = T, assay = "RNA") +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
     scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
     geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
 
-pdf(file.path(figures.dir,"S8A.pdf"), useDingbats = F, width = 15, height = 6)
+pdf(file.path(figures.dir,"S9A.pdf"), useDingbats = F, width = 15, height = 6)
 dp
 dev.off()
 
@@ -515,7 +532,7 @@ dev.off()
 #### S9B ####            
 bcell = bcell [, !bcell$subtype %in% c('Mast','Plasmacytoid.DC')]
 
-pdf (file.path (figures.dir,'S8B.pdf'))
+pdf (file.path (figures.dir,'S9B.pdf'))
 dp = DimPlot (bcell, group.by = 'subtype')
 dp
 dev.off()
@@ -523,7 +540,7 @@ dev.off()
 
 
 
-#### S9E ####      
+#### S9E_left ####      
 genes <- c(
   "CXCL13", 
   "KLRB1", 
@@ -548,6 +565,7 @@ genes <- c(
   "PDCD1")
 #genes <- unique(markers$gene)
 
+tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
 tcell <- FindVariableFeatures(tcell)
 tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
 
@@ -555,8 +573,8 @@ data <- tcell[,sample(colnames(tcell), 500)][["RNA"]]@data[genes,]
 data <- as.matrix(data)
 Idents(tcell) = tcell$subtype
 Idents(tcell) = factor (Idents(tcell), levels = rev (c('NK.CD56.dim','NK.CD56.bright','T.Stress','CD4.Naive.CM','CD8.GZMK','T.Cycling','T.Exhausted','Treg','TFH','NKT','CD8.TRM','CD8.IFN','CD4.TRM')))
-      
-pdf(file.path(figures.dir,"S8E.pdf"), useDingbats = F, width = 10, height = 5)
+   
+pdf(file.path(figures.dir,"S9E_left.pdf"), useDingbats = F, width = 10, height = 5)
  dp = DotPlot(object = tcell, features = genes, scale = T, assay = "RNA") +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
     scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
