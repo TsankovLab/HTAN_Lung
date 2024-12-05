@@ -10,7 +10,7 @@ library(ggpubr)
 # ----------------------------------------------------
 # set directories
 # ----------------------------------------------------
-data.path <- "./data/"
+data.path <- "../data/"
 figures.dir <- "../../figures/"
 system(paste0("mkdir -p ", figures.dir))
 # ----------------------------------------------------
@@ -123,7 +123,7 @@ createBoxplots(plotVector = v.1f, w = 3, h = 4, df.pvals = df.pvals.tcga,
                outfileName = "1f")
 
 # FIG 2E
-v.2e <- c("p53_targets", "AT2", "CC.G2M", "`Glycolysis/Hypox`", "pEMT")
+v.2e <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis/Hypox", "pEMT")
 
 createBoxplots(plotVector = v.2e, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
@@ -143,8 +143,8 @@ createBoxplots(plotVector = v.4d, w = 3, h = 4, df.pvals = df.pvals.tcga,
                outfileName = "4d")
 
 # EXTENDED FIG 1D
-v.s1d <- c("B.cells", "Fibroblast", "Cancer", "Mast", "`T.CD4+`", # row 1
-           "Myeloid", "NK.cells", "Smooth.muscle", "T.cells", "`T.CD8+`") # row 2
+v.s1d <- c("B.cells", "Fibroblast", "Cancer", "Mast", "T.CD4+", # row 1
+           "Myeloid", "NK.cells", "Smooth.muscle", "T.cells", "T.CD8+") # row 2
 
 createBoxplots(plotVector = v.s1d, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
@@ -154,7 +154,7 @@ createBoxplots(plotVector = v.s1d, df.pvals = df.pvals.tcga,
                outfileName = "s1d")
 
 # EXTENDED FIG 4A,C,D
-v.s4acd <- c("p53_targets", "AT2", "CC.G2M", "`Glycolysis/Hypox`", "pEMT") # row 1
+v.s4acd <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis/Hypox", "pEMT") # row 1
 
 levels.tmp <- levels(luad.2018@meta.data$comut)
 createBoxplots(plotVector = v.s4acd, 
@@ -175,7 +175,7 @@ createBoxplots(plotVector = v.s4acd,
 levels.tmp <- levels(luad.2018@meta.data$impact)
 createBoxplots(plotVector = v.s4acd, 
                xVar = "impact", 
-               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-3],
+               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 5, 
                plotDF = luad.2018@meta.data, 
                outfileName = "s4d")
@@ -203,7 +203,7 @@ createBoxplots(plotVector = v.s4h, w = 3.5, h = 5,
 levels.tmp <- levels(cptac.luad.prot@meta.data$impact)
 createBoxplots(plotVector = v.s4h, w = 3.5, h = 5,
                xVar = "impact", 
-               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-3],
+               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 3, 
                plotDF = cptac.luad.prot@meta.data, 
                outfileName = "s4hB")
@@ -308,7 +308,7 @@ createBoxplots(plotVector = v.s8de, w = 3, h = 5,
 levels.tmp <- levels(luad.2018@meta.data$impact)
 createBoxplots(plotVector = v.s8de, w = 3, h = 5,
                xVar = "impact", 
-               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-3],
+               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 4, 
                plotDF = luad.2018@meta.data, 
                outfileName = "s8eB")
