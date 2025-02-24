@@ -116,6 +116,7 @@ dev.off()
 
 
 #### S9C_continue ####    
+tnk <- subset(tnk, subset = sampleID != "1170")
 
 comp.df <- as.matrix(table(tnk$sampleID, tnk$predicted.id))
 comp.df  <- prop.table(comp.df , 1)
