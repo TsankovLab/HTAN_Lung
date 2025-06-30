@@ -10,7 +10,7 @@ load(paste0(data.path, "spatial_list.Rda"))
 
 spatial_list <- spatial_list[c(1:4, 7:16)]
 
-obj <- spatial_list[[2]]
+obj <- spatial_list[[4]]
 
 pdf(paste0(figures.dir, 'FIG_3D_spatial.pdf'), useDingbats = F, width = 10, height = 10)
 SpatialFeaturePlot(obj, features=c('SEMA3A', 'NRP1'))

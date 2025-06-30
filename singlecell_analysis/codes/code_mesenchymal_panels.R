@@ -11,6 +11,7 @@ library(gplots)
 library(ComplexHeatmap)
 library(data.table)
 library(pheatmap)
+library(ggpubr)
 
 ######
 # filtered
@@ -40,7 +41,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 3E
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 ###########
 pdf(paste0(figures.dir, "Fig3_stroma/Fig3E.pdf"), useDingbats = F, width = 10)
@@ -83,7 +84,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 3G
 # regulon heatmap
-df <- read.csv(paste0(data.path, "mes_pyscenic_subtype_zscore.csv", row.names = 1))
+df <- read.csv(paste0(data.path, "mes_pyscenic_subtype_zscore.csv"), row.names = 1)
 df2 <- dcast(df, regulon ~ subtype, value.var = "Z")
 rownames(df2) <- df2$regulon
 df2$regulon <- NULL
@@ -108,7 +109,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 3H
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 comp.df <- as.matrix(table(mes$orig.identSec, mes$subtype))
 comp.df  <- prop.table(comp.df , 1)
@@ -155,7 +156,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ########## Extended 7A
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 genes <- c("PTGDS", "ADH1B", "RGCC", "TIMP1", "RGS2", "APOE", "CCDC80", "C7", "C3", "COL1A2", "COL3A1", "COL1A1", "TMEM176B", "TMEM176A", "CYP1B1", "TUBA1B", "STMN1",
            "MKI67", "ISG15", "IL32", "IFI6", "RPS19", "RPS17", "RPS4Y1", "ELN", "MT1X", "ACTG2", "HIGD1B", "COX4I2", "PTN", "COL18A1", "PLXDC1", "KCNJ8", "TAGLN", "DSTN",
@@ -185,7 +186,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 7B
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 DefaultAssay(mes) <- "RNA"
 mes <- NormalizeData(mes)
@@ -221,7 +222,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #################### Extended 7C
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 # Stacked bar plot
 obj <- mes
@@ -250,12 +251,13 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 7E 
-meta = get(load(paste0(data.path, "meta.caf.modulescore.top20.paper.top20.ours.rna.assay.Rda"))
+meta = get(load(paste0(data.path, "meta.caf.modulescore.top20.paper.top20.ours.rna.assay.Rda")))
 
 paper.score = meta[,c(36:43)]
 our.score = meta[,c(44:56)]
 
 res = cor(paper.score, our.score, method = "p")
+rownames(res) = substr(rownames(res), 1, (nchar(rownames(res))-1))
 
 ##
 library(ComplexHeatmap)
@@ -319,7 +321,7 @@ dev.off()
 genes <- c("CCL2", "ITGA8", "ITGB1", "TGFBR2", "PTPRK", "COPA", "TNFRSF1A", "TGFB3", "VEGFB", "ITGA1", "NRP1", "ACVR1", "COL16A1", "NOTCH2", "FBN1", "PGF",
            "NOTCH3", "AXL", "FN1", "TNC", "ITGA5", "COL15A1", "NAMPT", "VEGFA", "PLAUR", "COL12A1")
 
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 DefaultAssay(mes) <- "RNA"
 mes <- NormalizeData(mes)
 mes <- FindVariableFeatures(mes)
@@ -344,7 +346,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 7J_bottom
-mes <- get(load("./dropbox_data/mes.final.nodoublets.Rda"))
+mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 genes <- c("CCL2", "ITGA8", "ITGB1", "TGFBR2", "PTPRK", "COPA", "TNFRSF1A", "TGFB3", "VEGFB", "ITGA1", "NRP1", "ACVR1", "COL16A1", "NOTCH2", "FBN1", "PGF",
            "NOTCH3", "AXL", "FN1", "TNC", "ITGA5", "COL15A1", "NAMPT", "VEGFA", "PLAUR", "COL12A1")

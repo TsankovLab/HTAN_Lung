@@ -1,1 +1,1 @@
-
+Clinical information for the SU2C cohort was retrieved from: Ravi, A., Hellmann, M.D., Arniella, M.B. et al. Genomic and transcriptomic analysis of checkpoint blockade response in advanced non-small cell lung cancer. *Nat Genet* **55**, 807–819 (2023).
