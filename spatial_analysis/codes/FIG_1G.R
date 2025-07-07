@@ -26,7 +26,7 @@ obj$navin_annots_2[obj$navin_annots_2 == 'Smooth muscle' | obj$navin_annots_2 ==
 obj$navin_annots_2[obj$navin_annots_2 == 'Immune cells_lymphocytes'] = 'Immune'
 
 pdf(paste0(figures.dir, 'FIG_1G_spatial_patho.pdf'), useDingbats = F, width = 10, height = 10)
-SpatialDimPlot(obj, 'navin_annots_2', cols=c('white', 'blue', 'red', 'green'))
+SpatialDimPlot(obj, group.by='navin_annots_2', cols=c('white', 'blue', 'red', 'green'))
 dev.off()
 
 df_list <- list()
@@ -38,6 +38,7 @@ malig_ann = c("Adenocarcinoma_lepidic", "Mucinous adenocarcinoma_lepidic", "Muci
 stromal_ann = c("Fibroblasts", "Smooth muscle", "Endothelial cell", "Endothelium", "Vascular endothelium", "Vascular  smooth muscle", "Vascular smooth muscle")
 
 immune_ann = c("Immune cells", "Immune cells_lymphocytes", "Immune_lymphocytes", "Immune_TLS_BALT", "Immune cells_granulocytes", "Immune cells_TLS/BALT", "Immune cells_BALT/TLS")
+
 
 samID_list = c('MGH1174.C', 'MGH1174.D', 'MGH1179.B', 'BWH09.A', 'BWH09.D', 'BWH11.C', 'BWH11.D', 'BWH14.A', 'BWH14.B', 'BWH19.C', 'BWH19.D', 'BWH23.A', 'BWH23.B')
 sample_list = c('1174.C', '1174.D', '1179.B', 'BW09.A', 'BW09.D', 'BW11.C', 'BW11.D', 'BW14.A', 'BW14.B', 'BW19.C', 'BW19.D', 'BW23.A', 'BW23.B')
@@ -53,6 +54,7 @@ for(i in 1:length(sample_list)){
   annots[,1] <- NULL
   colnames(annots) <- c("annots")
   obj$navin_annots <- annots$annots
+  #print(unique(obj$navin_annots))
   obj$samID <- samID_list[i]
   obj$navin_annots_2 <- obj$navin_annots
   obj$navin_annots_2[obj$navin_annots_2 %in% malig_ann] = 'Malignant'
@@ -70,6 +72,7 @@ for(i in 1:length(sample_list)){
   
   df_list[[sample]] <- df
 }
+
 
 merged_df <- do.call(rbind, df_list)
 merged_df$navin_annots_2 = factor(merged_df$navin_annots_2, levels = c("Malignant", "Stromal", "Immune"))

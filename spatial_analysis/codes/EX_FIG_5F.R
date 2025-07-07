@@ -29,6 +29,6 @@ avg.mtx <- Reduce("+", patient.corr.list) / length(patient.corr.list)
 # avg corr all slides
 range <- 0.3
 
-pdf(file = paste0(figures.dir, "EX_FIG_7F.pdf"), useDingbats = F, width = 6, height = 6)
+pdf(file = paste0(figures.dir, "EX_FIG_5F.pdf"), useDingbats = F, width = 6, height = 6)
 pheatmap(avg.mtx, breaks = seq(-range, range, length.out = 100), cluster_cols = F, cluster_rows = F)
 dev.off()

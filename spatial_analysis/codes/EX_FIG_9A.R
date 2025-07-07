@@ -33,7 +33,7 @@ order <- c("Cancer", "Nonmalig", "Plasma", "Lymphoid", "Bcell", "Mesenchymal", "
 # avg corr all slides
 range <- 0.3
 
-pdf(file = paste0(figures.dir, "EX_FIG_15A_wt.pdf"), useDingbats = F, width = 4, height = 3.5)
+pdf(file = paste0(figures.dir, "EX_FIG_9A_wt.pdf"), useDingbats = F, width = 4, height = 3.5)
 pheatmap(avg.mtx[order,order], breaks = seq(-range, range, length.out = 100), cluster_cols = F, cluster_rows = F)
 dev.off()
 
@@ -53,6 +53,6 @@ order <- c("Cancer", "Nonmalig", "Plasma", "Lymphoid", "Bcell", "Mesenchymal", "
 # avg corr all slides
 range <- 0.3
 
-pdf(file = paste0(figures.dir, "EX_FIG_15A_mut.pdf"), useDingbats = F, width = 4, height = 3.5)
+pdf(file = paste0(figures.dir, "EX_FIG_9A_mut.pdf"), useDingbats = F, width = 4, height = 3.5)
 pheatmap(avg.mtx[order,order], breaks = seq(-range, range, length.out = 100), cluster_cols = F, cluster_rows = F)
 dev.off()

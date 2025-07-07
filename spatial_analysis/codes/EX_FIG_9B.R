@@ -21,24 +21,37 @@ patient.corr.list <- list()
 for (i in 1:length(spatial_list)) { # filtered - no BW16, etc.
   obj <- spatial_list[[i]]@meta.data
   # change this for every cell type I'm looking at
-  corr <- cor(obj[,c(14:24)], obj[,c(14:24)]) # 2v4 high lvl only
+  corr <- cor(obj[,c(14:15, 21:24, 59:77)], obj[,c(14:15, 21:24, 59:77)]) # 2v4 bmast, tnk subtype, high lvl
   patient.corr.list[[i]] <- corr
 }
 
 avg.mtx <- Reduce("+", patient.corr.list) / length(patient.corr.list)
 
-order <- c("Cancer", "Nonmalig", "Plasma", "Lymphoid", "Bcell", "Mesenchymal", "Pericyte", "Endothelial", "Mast", "Myeloid", "NK")
+order <- c("Cancer", "Nonmalig", "CD8.IFN", "T.Exhausted", "CD8.M.E", "CD8.Naive", "B.Follicular", "Plasma.IGHA", "Plasma.IGHG",
+"TH17", "TFH","CD4.M.E", "CD4.Naive","Treg", "Myeloid","NK", "T.Delta.Gamma", "T.Cycling", "Plasmacytoid.DC", "Mesenchymal",
+"Pericyte", "Endothelial", "Mast", "B.MZ", "B.Cycling")
+
+real_order <- c("Cancer", "Nonmalig", "CD8.IFN", "T.Exhausted", "CD8.GZMK", "CD8.TRM", "B.Follicular", "Plasma.IGHA", "Plasma.IGHG",
+"T.Stress", "TFH","CD4.TRM", "CD4.Naive","Treg", "Myeloid","NK.CD56.dim", "NK.CD56.bright", "T.Cycling", "Plasmacytoid.DC", "Mesenchymal",
+"Pericyte", "Endothelial", "Mast", "B.MZ", "B.Cycling")
+
+plt.avg.mtx <- avg.mtx
+plt.avg.mtx <- plt.avg.mtx[order,order]
+
+colnames(plt.avg.mtx) <- real_order
+rownames(plt.avg.mtx) <- real_order
+
 # avg corr all slides
 range <- 0.3
 
-pdf(file = paste0(figures.dir, "FIG_7A_mean.pdf"), useDingbats = F, width = 4, height = 3.5)
-pheatmap(avg.mtx[order,order], breaks = seq(-range, range, length.out = 100), cluster_cols = F, cluster_rows = F)
+pdf(file = paste0(figures.dir, "EX_FIG_9B_mean.pdf"), useDingbats = F, width = 6, height = 6)
+pheatmap(plt.avg.mtx, breaks = seq(-range, range, length.out = 100), cluster_cols = F, cluster_rows = F)
 dev.off()
 
 patient.corr.list2 <- list()
 for (i in 1:length(spatial_list)) { # filtered - no BW16, etc.
   obj <- spatial_list[[i]]@meta.data
-  corr <- cor(obj[,c(14:24)], obj[,c(14:24)]) # 2v4 high lvl
+  corr <- cor(obj[,c(14:15, 21:24, 59:77)], obj[,c(14:15, 21:24, 59:77)]) # 2v4 bmast, tnk subtype, high lvl
   patient.corr.list2[[i]] <- as.data.frame(t(as.data.frame(unmatrix(corr))))
 }
 
@@ -78,6 +91,11 @@ range <- 0.3
 avg.mtx.melt2 <- avg.mtx.melt2[order,order]
 avg.mtx.melt3 <- avg.mtx.melt3[order,order]
 
-pdf(file = paste0(figures.dir, "FIG_7A_diff.pdf"), useDingbats = F, width = 4, height = 3.3)
+colnames(avg.mtx.melt2) <- real_order
+rownames(avg.mtx.melt2) <- real_order
+colnames(avg.mtx.melt3) <- real_order
+rownames(avg.mtx.melt3) <- real_order
+
+pdf(file = paste0(figures.dir, "EX_FIG_9B_diff.pdf"), useDingbats = F, width = 6, height = 6)
 pheatmap(avg.mtx.melt2, display_numbers = avg.mtx.melt3, border_color="gray", breaks = seq(-range, range, length.out = 100), cluster_cols = F, cluster_rows = F)
 dev.off()

@@ -21,6 +21,6 @@ p <- ggplot(temp, aes(x = p53_status, y = percent, color = p53_status)) +
   theme(plot.title = element_text(hjust = 0.5),
         legend.position = "none") +
   stat_compare_means(method = "wilcox.test", label = "p.format")
-pdf(paste0(figures.dir, "FIG_7G.pdf"))
+pdf(paste0(figures.dir, "FIG_8G.pdf"))
 print(p)
 dev.off()

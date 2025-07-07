@@ -12,7 +12,7 @@ spatial_list <- spatial_list[c(1:4, 7:16)]
 
 obj <- spatial_list[[4]]
 
-pdf(paste0(figures.dir, 'FIG_3D_spatial.pdf'), useDingbats = F, width = 10, height = 10)
+pdf(paste0(figures.dir, 'FIG_4D_spatial.pdf'), useDingbats = F, width = 10, height = 10)
 SpatialFeaturePlot(obj, features=c('SEMA3A', 'NRP1'))
 dev.off()
 
@@ -25,7 +25,7 @@ df.t$p53_status <- c(rep("p53_mut", 4), rep("WT", 10))
 df.t$p53_status  <- factor(df.t$p53_status , levels = c("WT", "p53_mut"))
 colnames(df.t) <- c("SEMA3A_NRP1", "p53_status")
 
-pdf(paste0(figures.dir, "FIG_3D_sema3a_nrp1  .pdf"), width = 3, height = 3, useDingbats=FALSE)
+pdf(paste0(figures.dir, "FIG_4D_sema3a_nrp1  .pdf"), width = 3, height = 3, useDingbats=FALSE)
 ggboxplot(df.t, x = "p53_status", y = "SEMA3A_NRP1", color = "p53_status",
                        palette = c("#0091CA", "#D8423D"), add = "jitter",
                        title = "SEMA3A_NRP1 Spatial Corr") +
