@@ -40,14 +40,14 @@ other <- c("19", "1181", "1179", "1170", "17")
 total.samples <- c(p53.filt, WT.filt, other)
 
 
-#### F4A ####
-pdf(paste0(figures.dir, "F4_A.pdf"), useDingbats = F, width = 8)
+#### F5A ####
+pdf(paste0(figures.dir, "F5_A.pdf"), useDingbats = F, width = 8)
 DimPlot(myeloid, group.by = "subtype")
 dev.off()
-#ggsave(file.path(figures.dir,'F4_A.png'))
 
 
-#### F4B ####            
+
+#### F5B ####            
 pal <- gradient_n_pal(brewer_pal(palette = "Spectral", direction = -1)(7))
 genes <- c("RETN", "AZU1", "S100A12", "LILRB2", "CLEC9A", "FCER1A", "LAMP3", "MKI67", "APOE", "CXCL10", "CCL4", "FABP4", "FOLR2", "SPP1", "TREM2","LILRA4","TPSB2")
 
@@ -67,15 +67,12 @@ custom_color_scale <- scale_color_gradientn(
 p <- lapply(p, function (x) x + custom_color_scale)
 for(i in 1:length(p)) {p[[i]] <- p[[i]] + NoLegend() + NoAxes()}
 
-pdf(paste0(figures.dir, "F4_B.pdf"), useDingbats = F, width = 14, height = 7)
+pdf(paste0(figures.dir, "F5_B.pdf"), useDingbats = F, width = 14, height = 7)
 cowplot::plot_grid(plotlist = p, ncol=6)
 dev.off()
-#ggsave(file.path(figures.dir,'myeloid.fp.spectral.max4.v2_rep2.png'), width = 14, height = 7)
 
-#write.csv (do.call (cbind, lapply(p, function(x) x$data)), file.path (projdir, 'F4_B.csv'))
-### feature plots are not space efficient
 
-#### F4C_S8C ####
+#### F5C_S6C ####
 p53 <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
 WT <- c("14", "1174", "1176", "1183", "BW01", "BW04", "BW05", "BW09", "BW19", "BW23")
 p53.filt <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
@@ -108,13 +105,13 @@ for (subtype in subtypes){
 #figures.dir <- paste0(proj.path, "/Results/10x_All_190615/P53_paper/")
 # myeloid subtype boxplots
 
-pdf(file.path(figures.dir,'F4C_S8C.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
+pdf(file.path(figures.dir,'F5C_S6C.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
 cowplot::plot_grid(plotlist = mean.plots, ncol=8)
 dev.off()
 
-#write.csv (do.call (cbind, lapply (mean.plots, function(x) x$data)), file.path (projdir, 'F4_C_S7_C.csv'))
 
-#### F4D SPP1 proportion ####
+
+#### F5D SPP1 proportion ####
 p53 <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
 WT <- c("14", "1174", "1176", "1183", "BW01", "BW04", "BW05", "BW09", "BW19", "BW23")
 p53.filt <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
@@ -150,14 +147,14 @@ subtypes = unique (df$subtype)
   }
 
 
-  pdf(file.path(figures.dir,'F4D_right_SPP1_single_cell_p53_mut_vs_wt.pdf'), width = 15, height = 6, useDingbats=FALSE)
+  pdf(file.path(figures.dir,'F5D_right_SPP1_single_cell_p53_mut_vs_wt.pdf'), width = 15, height = 6, useDingbats=FALSE)
 
   print(cowplot::plot_grid(plotlist = mean.plots, ncol=6))
   dev.off()
 }
 
 
-#### F4D pathway enrichment ####
+#### F5D pathway enrichment ####
 q_values <- c(11.60205999,
 11.60205999,
 10.31695296,
@@ -197,11 +194,10 @@ myeloid.p53 <- subset(myeloid, idents = p53.filt)
 corr <- cor(as.matrix(t(myeloid.p53[["RNA"]]@counts["SPP1",,drop = F])), as.matrix(t(myeloid.p53[["RNA"]]@counts)))
 corr <- t(corr)
 corr <- corr[order(-corr[,"SPP1"]),]
-#write.csv(corr, file = file.path(projdir, "F4_D_enrichment.csv"))
 
 
 
-#### F4E ####
+#### F5E ####
 #myeloid = readRDS (file.path ('../dropbox_data','myeloid_pDC_mast_integrated.rds'))
 ### add module score for emt and hypoxia 
 hypoxia.hallmark <- c("ACKR3","ADM","ADORA2B","AK4","AKAP12","ALDOA","ALDOB","ALDOC","AMPD3","ANGPTL4","ANKZF1","ANXA2","ATF3","ATP7A","B3GALT6","B4GALNT2","BCAN","BCL2","BGN","BHLHE40","BNIP3L","BRS3","BTG1","CA12","CASP6","CAV1","CAVIN1","CAVIN3","CCN1","CCN2","CCN5","CCNG2","CDKN1A","CDKN1B","CDKN1C","CHST2","CHST3","CITED2","COL5A1","CP","CSRP2","CXCR4","DCN","DDIT3","DDIT4","DPYSL4","DTNA","DUSP1","EDN2","EFNA1","EFNA3","EGFR","ENO1","ENO2","ENO3","ERO1A","ERRFI1","ETS1","EXT1","F3","FAM162A","FBP1","FOS","FOSL2","FOXO3","GAA","GALK1","GAPDH","GAPDHS","GBE1","GCK","GCNT2","GLRX","GPC1","GPC3","GPC4","GPI","GRHPR","GYS1","HAS1","HDLBP","HEXA","HK1","HK2","HMOX1","HOXB9","HS3ST1","HSPA5","IDS","IER3","IGFBP1","IGFBP3","IL6","ILVBL","INHA","IRS2","ISG20","JMJD6","JUN","KDELR3","KDM3A","KIF5A","KLF6","KLF7","KLHL24","LALBA","LARGE1","LDHA","LDHC","LOX","LXN","MAFF","MAP3K1","MIF","MT1E","MT2A","MXI1","MYH9","NAGK","NCAN","NDRG1","NDST1","NDST2","NEDD4L","NFIL3","NOCT","NR3C1","P4HA1","P4HA2","PAM","PCK1","PDGFB","PDK1","PDK3","PFKFB3","PFKL","PFKP","PGAM2","PGF","PGK1","PGM1","PGM2","PHKG1","PIM1","PKLR","PKP1","PLAC8","PLAUR","PLIN2","PNRC1","PPARGC1A","PPFIA4","PPP1R15A","PPP1R3C","PRDX5","PRKCA","PYGM","RBPJ","RORA","RRAGD","S100A4","SAP30","SCARB1","SDC2","SDC3","SDC4","SELENBP1","SERPINE1","SIAH2","SLC25A1","SLC2A1","SLC2A3","SLC2A5","SLC37A4","SLC6A6","SRPX","STBD1","STC1","STC2","SULT2B1","TES","TGFB3","TGFBI","TGM2","TIPARP","TKTL1","TMEM45A","TNFAIP3","TPBG","TPD52","TPI1","TPST2","UGP2","VEGFA","VHL","VLDLR","WSB1","XPNPEP1","ZFP36","ZNF292")
@@ -298,14 +294,14 @@ avglog2fc.df.plot = avglog2fc.df[,c("IFNG.Response", "Hypoxia", "EMT")]
 pvals.df.plot = pvals.df[,c("IFNG.Response", "Hypoxia", "EMT")]
 
 ############
-pdf(paste0(figures.dir, "F4E.pdf"), useDingbats = F, width = 4, height = 4)
+pdf(paste0(figures.dir, "F5E.pdf"), useDingbats = F, width = 4, height = 4)
 pheatmap(avglog2fc.df.plot, display_numbers = pvals.df.plot, breaks = seq(-range, range, length.out = 100),  cellheight=13,cellwidth=13, 
          cluster_rows = T,cluster_cols = F
 )
 dev.off()
 
 
-#### F4F ####
+#### F5F ####
 df <- get(load(paste0(data.path, "lig_rec_differential_highlvl_df_not_allzeros.Rda")))
 
 df <- df[grepl("Myeloid", df$cell.pair, fixed=TRUE),]
@@ -331,7 +327,7 @@ custom_color_scale <- scale_fill_gradientn(
 ) 
 
 ############
-pdf(file = paste0(figures.dir, "F4F.pdf"), useDingbats = F, height = 15, width = 8.3)
+pdf(file = paste0(figures.dir, "F5F.pdf"), useDingbats = F, height = 15, width = 8.3)
 p<-ggplot(data = df2, mapping = aes(x=cell.pair, y=int_name, color=p53_wt_prop_diff, size=p53_wt_neglogpval_proptest))+geom_point(shape = 21, aes(colour = as.factor(signif), fill = p53_wt_prop_diff))+
   scale_colour_manual(values=c("00FFFFFF", "darkgray", "black")) + theme_minimal() +
   custom_color_scale +
@@ -341,7 +337,7 @@ p
 dev.off()
 
 
-#### F4G ####
+#### F5G ####
 all = get (load (file.path('../dropbox_data','all.merge.new.cci.nodoublets.v4.Rda')))
 
 genes <- c("CXCR3", "CXCL11")
@@ -351,7 +347,7 @@ genes <- c("CXCR3", "CXCL11")
 Idents(all) <- "celltype"
 #Idents(all) = factor (Idents(all), levels = rev(c('Malignant','Nonmalig Epi','Endothelial','Mesenchymal','Pericyte','Mast','Bcell','Plasma','NK','Tcell','Myeloid')))
 # Idents(all) <- "subtype"
-pdf(file.path(figures.dir,'F4G.pdf'), useDingbats = F, width = 4, height = 4)
+pdf(file.path(figures.dir,'F5G.pdf'), useDingbats = F, width = 4, height = 4)
   dp = DotPlot(object = all, features = genes, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) +
     scale_colour_gradient2(low = "navy", high = "firebrick") +
@@ -361,7 +357,7 @@ dev.off()
 ###
 
 
-### F4H ####
+### F5H ####
 DefaultAssay(myeloid) = "RNA"
 
 genes <- c('SPP1', 'CCL17', 'PSAP', 'SEMA4D', 'P2RY6', 'TGFBR2', 'LGALS9', 'VEGFB', 'TGFBR1', 'NRP2', 'NRP1', 'CD86', 'CXCL11', 'SIGLEC10', 'VEGFA',
@@ -438,7 +434,7 @@ avglog2fc.df = avglog2fc.df[names,]
 pvals.df = pvals.df[names,]
 
 ############
-pdf(paste0(figures.dir, "F4H.pdf"), useDingbats = F, width = 20, height = 8) 
+pdf(paste0(figures.dir, "F5H.pdf"), useDingbats = F, width = 20, height = 8) 
 pheatmap(avglog2fc.df, display_numbers = pvals.df, breaks = seq(-range, range, length.out = 100),  cellheight=13,cellwidth=13, 
          cluster_rows = F,cluster_cols = F,
          color = colorRampPalette(c("navy", "white", "firebrick"))(100))
@@ -446,7 +442,7 @@ dev.off()
 
 
 
-### S8A ####
+### S6A ####
 meta_df = table (data.frame (sample = myeloid$orig.identSec, subtype = myeloid$subtype))
 meta_df = as.data.frame (prop.table (meta_df, 1))
 meta_df$sample = factor(meta_df$sample, levels = c(
@@ -486,36 +482,13 @@ bp = ggplot (meta_df, aes (x = sample, y = Freq, fill = subtype)) +
     #panel.grid.minor = element_blank()
   )
 
-pdf (file.path (figures.dir,'S8A.pdf'), height=4)
+pdf (file.path (figures.dir,'S6A.pdf'), height=4)
 bp
 dev.off()
 
-#write.csv (bp$data, file.path (projdir, 'S7A.csv'))
 
 
-### S8H ####
-#Idents(myeloid) <- "subtype"
-#markers <- FindAllMarkers(myeloid, only.pos = T, max.cells.per.ident = 1000)
-
-#markers <- myeloid.markers
-#markers[,"cluster"] <- as.character(markers[,"cluster"]) # in case this is a factor
-
-#library(dplyr)
-
-#markers <- markers %>%
-#  arrange(cluster, desc(avg_log2FC)) %>% 
-#  group_by(cluster) %>%
-#  slice(1:10)
-  
-
-# dir.create(paste0(figures.dir, "Figures_v4/Fig5_myeloid_bmast/"))
-#write.csv(markers, file = file.path(projdir, "S7_I_myeloid.markers.top10.csv"))
-
-#order <- rev(unique(markers$cluster)) # already sorted
-
-#Idents(myeloid) <- factor(Idents(myeloid), levels = order)
-#genes <- unique(markers$gene)
-
+### S6H ####
 Idents(myeloid) <- "subtype"
 Idents (myeloid) = factor (Idents(myeloid), levels = rev(c(
   'TAM.FABP4',
@@ -567,7 +540,7 @@ mye_markers = unlist(strsplit(mye_markers,'\n'))
 DefaultAssay (myeloid) = 'RNA'
 myeloid <- ScaleData(myeloid, features = c(VariableFeatures(myeloid),mye_markers)) # add genes of interest to the heatmap
 
-pdf(file.path(figures.dir, 'S8H.pdf'), useDingbats = F, width = 10, height = 6)
+pdf(file.path(figures.dir, 'S6H.pdf'), useDingbats = F, width = 10, height = 6)
  dp= DotPlot(object = myeloid, features = mye_markers, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
     #scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
@@ -575,10 +548,9 @@ pdf(file.path(figures.dir, 'S8H.pdf'), useDingbats = F, width = 10, height = 6)
     geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
     dp
 dev.off()
-#write.csv (dp$data, file.path (projdir,'S7_I.csv'))
 
 
-#### S8G ####
+#### S6G ####
 gene = 'SPP1'
 gene_cor = cor (t(as.matrix(myeloid@assays$RNA@counts[gene,, drop=F])), as.matrix(t(myeloid@assays$RNA@counts)))
 gene_cor = as.data.frame (t(gene_cor))
@@ -587,6 +559,6 @@ top_cor_genes = top_cor_genes[rownames(top_cor_genes) != gene,,drop=F]
 top_cor_genes$gene = factor (rownames(top_cor_genes), levels = rev(rownames(top_cor_genes)))
 bp = ggplot (top_cor_genes, aes (x = SPP1, y = gene)) + geom_bar(stat = 'identity') + theme_classic()
 
-pdf (file.path (figures.dir, 'S8G.pdf'))
+pdf (file.path (figures.dir, 'S6G.pdf'))
 bp
 dev.off()

@@ -1,6 +1,6 @@
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### FIGURE 6E AND EXTENDED 10B 
+##################### FIGURE 7E AND EXTENDED 8B 
 ##################### SURVIVAL ANALYSES OF SU2C-MARK COHORT
 library(readxl)
 library(survival)
@@ -10,7 +10,6 @@ library(forestplot)
 data.path <- "../data/"
 figures.dir <- "../../figures/"
 
-if (!file.exists(paste0(figures.dir,'Fig6/'))){dir.create(paste0(figures.dir,'Fig6/'), recursive=TRUE)}
 
 #####################
 #####################
@@ -50,7 +49,7 @@ se = which(clin$TP53.all == "Silent")  ## 0
 
 
 
-##################### 6E (left)
+##################### 7E (left)
 ##################### adeno + anti-pd1
 se = which(clin$Agent_PD1 %in% c("Nivolumab", "Pembrolizumab") & clin$Histology_Harmonized == "Adeno")  ## adeno+ anti-pd-1
 clin.subset = clin[se,]
@@ -194,7 +193,7 @@ res2 = data.frame(sub2, coxph.pvalPFS.ann)
 
 
 ##############
-pdf(paste0(figures.dir, "Fig6/Fig6E_left.pdf"), useDingbats = F, 9, 9)
+pdf(paste0(figures.dir, "Fig7E_left.pdf"), useDingbats = F, 9, 9)
 forestplot(res2, as.matrix(res1), graph.pos = 2, new_page = F,
            xlab = "Hazard ratio",
            xticks = c(0, 1, 2, 3, 4),
@@ -212,7 +211,7 @@ dev.off()
 
 
 
-##################### Exteneded 10B (left)
+##################### Exteneded 8B (left)
 ##################### adeno + all treatments
 se = which(clin$Histology_Harmonized == "Adeno") ## adeno + all treatments
 clin.subset = clin[se,]
@@ -356,7 +355,7 @@ res2 = data.frame(sub2, coxph.pvalPFS.ann)
 
 
 ##############
-pdf(paste0(figures.dir, "Fig6/Ext_Fig10B_left.pdf"), useDingbats = F, 9, 9)
+pdf(paste0(figures.dir, "Ext_Fig8B_left.pdf"), useDingbats = F, 9, 9)
 forestplot(res2, as.matrix(res1), graph.pos = 2, new_page = F,
            xlab = "Hazard ratio",
            xticks = c(0, 1, 2, 3, 4),
@@ -374,7 +373,7 @@ dev.off()
 
 
 
-##################### 6E (right)
+##################### 7E (right)
 ##################### squamous + anti-pd1
 se = which(clin$Agent_PD1 %in% c("Nivolumab", "Pembrolizumab") & clin$Histology_Harmonized == "Squamous")  ## sq+ anti-pd-1
 clin.subset = clin[se,]
@@ -526,7 +525,7 @@ res1.mod[se,"ubPFS"] = 17
 
 
 ##############
-pdf(paste0(figures.dir, "Fig6/Fig6E_right.pdf"), useDingbats = F, 9, 9)
+pdf(paste0(figures.dir, "Fig7E_right.pdf"), useDingbats = F, 9, 9)
 forestplot(res2, as.matrix(res1.mod), graph.pos = 2, new_page = F,
            xlab = "Hazard ratio",
            xticks = c(0, 1, 5, 10, 15, 17),
@@ -544,7 +543,7 @@ dev.off()
 
 
 
-##################### Exteneded 10B (right))
+##################### Exteneded 8B (right))
 ##################### 
 se = which(clin$Histology_Harmonized == "Squamous") ## sq + all treatments
 clin.subset = clin[se,]
@@ -696,7 +695,7 @@ res1.mod[se,"ubPFS"] = 18
 
 
 ##############
-pdf(paste0(figures.dir, "Fig6/Ext_Fig10B_right.pdf"), useDingbats = F, 9, 9)
+pdf(paste0(figures.dir, "Ext_Fig8B_right.pdf"), useDingbats = F, 9, 9)
 forestplot(res2, as.matrix(res1.mod), graph.pos = 2, new_page = F,
            xlab = "Hazard ratio",
            xticks = c(0, 1, 5, 10, 15, 18),

@@ -31,12 +31,12 @@ tnk <- get(load(file.path('../dropbox_data','tnk.validation.Rda'))) # validation
 
 
 
-#### F5AB ####
-pdf(paste0(figures.dir, "F5A.pdf"), useDingbats = F, width = 7, height = 7)
+#### F6AB ####
+pdf(paste0(figures.dir, "F6A.pdf"), useDingbats = F, width = 7, height = 7)
 dp = DimPlot (tcell, group.by = 'subtype')
 dp
 dev.off()
-#ggsave(file.path(figures.dir, "F5A.png"), width = 7, height = 7)
+#ggsave(file.path(figures.dir, "F6A.png"), width = 7, height = 7)
 
 
 
@@ -67,16 +67,14 @@ custom_color_scale <- scale_color_gradientn(
 p <- lapply(p, function (x) x + custom_color_scale)
 for(i in 1:length(p)) {p[[i]] <- p[[i]] + NoLegend() + NoAxes()}
 
-pdf(paste0(figures.dir, "F5B.pdf"), useDingbats = F, width = 15, height = 15)
+pdf(paste0(figures.dir, "F6B.pdf"), useDingbats = F, width = 15, height = 15)
 cowplot::plot_grid(plotlist = p, ncol=3)
 dev.off()
-#ggsave(file.path(figures.dir, "F5B.png"), width = 15, height = 15)
+#ggsave(file.path(figures.dir, "F6B.png"), width = 15, height = 15)
 
 
-### feature plots are not space efficient
-#write.csv (do.call (cbind, lapply(p,function(x) x$data)), file.path (projdir, 'F5_A_B.csv'))
 
-#### F5C_S9C ####
+#### F6C_S7C ####
 p53 <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
 WT <- c("14", "1174", "1176", "1183", "BW01", "BW04", "BW05", "BW09", "BW19", "BW23")
 p53.filt <- c("1172", "1173", "1175", "1182", "BW16", "BW11", "BW14", "BW06")
@@ -108,14 +106,13 @@ for (subtype in subtypes){
 }
 
             
-pdf(file.path(figures.dir,'F5C_S9C.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
+pdf(file.path(figures.dir,'F6C_S7C.pdf'), width = 18, height = 7.5, useDingbats=FALSE)
 cowplot::plot_grid(plotlist = mean.plots, ncol=8)
 dev.off()
 
-#write.csv (do.call (cbind, lapply (mean.plots, function(x) x$data)), file.path(projdir, 'F5_C_S8_C.csv'))
 
 
-#### S9C_continue ####    
+#### S7C_continue ####    
 tnk <- subset(tnk, subset = sampleID != "1170")
 
 comp.df <- as.matrix(table(tnk$sampleID, tnk$predicted.id))
@@ -165,11 +162,10 @@ pdf(file.path(figures.dir,'S9C_TFH_combined.pdf'), width = 3, height = 3.5)
 mean.plot
 dev.off()
 
-#write.csv (mean.plot$data, file.path (projdir, 'S8_C_cohort_TFH_combined.csv'))
 
 
 
-### F5D ####
+### F6D ####
 
 # T-malignant ----------------------------------------
 df <- get(load(file.path(data.path, "lig_rec_differential_htan_df_not_allzeros.Rda")))
@@ -226,9 +222,9 @@ p.bar.t_myeloid <- df2 |>
     ylab("Ligand-Receptor pair")
 
 # generate patchwork for bar plots
-p.5d.bar <- p.bar.t_malig + p.bar.t_myeloid + patchwork::plot_layout(ncol = 1, heights = c(1, 11/8))
-ggsave(filename = file.path(figures.dir, "F5D_bar.pdf"), 
-       plot = p.5d.bar, 
+p.6d.bar <- p.bar.t_malig + p.bar.t_myeloid + patchwork::plot_layout(ncol = 1, heights = c(1, 11/8))
+ggsave(filename = file.path(figures.dir, "F6D_bar.pdf"), 
+       plot = p.6d.bar, 
        device = "pdf", 
        width = 5, 
        height = 5 * 2)
@@ -303,11 +299,11 @@ p.t_myeloid <- comb.df.filtered |>
 #     write.csv(file.path(data.path, "5d_dot.t_myeloid.csv"))
 
 # generate patchwork for dot plots
-p.5d.dot <- patchwork::wrap_plots(p.t_malig, p.t_myeloid, nrow = 2) + patchwork::plot_layout(heights = c(1, 11/8))
-p.5d.dot
+p.6d.dot <- patchwork::wrap_plots(p.t_malig, p.t_myeloid, nrow = 2) + patchwork::plot_layout(heights = c(1, 11/8))
+p.6d.dot
 
-ggsave(filename = file.path(figures.dir, "F5D_dot.pdf"), 
-       plot = p.5d.dot, 
+ggsave(filename = file.path(figures.dir, "F6D_dot.pdf"), 
+       plot = p.6d.dot, 
        device = "pdf", 
        width = 10, 
        height = 5 * 2)
@@ -316,9 +312,7 @@ ggsave(filename = file.path(figures.dir, "F5D_dot.pdf"),
 
 
 
-
-
-#### F5E ####   
+#### F6E ####   
 names <- c("TIGIT+CTLA4-PDCD1-",
   "TIGIT+CTLA4+PDCD1-",
   "TIGIT+CTLA4-PDCD1+",
@@ -364,7 +358,7 @@ sums <- sums[rev(names),]
 
 sequential <- brewer.pal(7, "Spectral")
          
-pdf(file.path(figures.dir, "F5E.pdf"), useDingbats = F, width = 5, height = 6)
+pdf(file.path(figures.dir, "F6E.pdf"), useDingbats = F, width = 5, height = 6)
 barplot(as.matrix(sums),
  # names.arg = wide$Seed, # x-axis labels
  cex.names = 1, # makes x-axis labels small enough to show all
@@ -381,292 +375,6 @@ legend("bottomright",
  #title = "Years")
 dev.off()
 
-#write.csv (sums, file.path (projdir, 'F5_E.csv'))
-
-
-#### F5H ####            
-all_malig = data.frame (
-        row.names = c(
-        'PVR+CD274+',
-        'PVR+CD274-',
-        'PVR-CD274+',
-        'PVR-CD274-'),WT=c(0.004290886,
-     0.072632191,
-     0.024315023,
-     0.898761901),p53_mut=c(0.03597884,
-        0.15806878,
-        0.05740741,
-        0.74854497))
-cycling_malig = data.frame (
-        row.names = c(
-        'PVR+CD274+',
-        'PVR+CD274-',
-        'PVR-CD274+',
-        'PVR-CD274-'),
-        WT=c(
-        0.01237964,
-        0.10729023,
-        0.03507565,
-        0.84525447),
-        p53_mut=c(
-        0.1402525,
-        0.3029453,
-        0.0743338,
-        0.4824684))
-
-sums <- all_malig
-
-rownames(sums) <- sums$X
-sums$X <- NULL
-sequential <- brewer.pal(4, "Spectral")
-# sequential <- rev(sequential)
-
-#### F5H malignant cells ####            
-pdf (file.path(figures.dir,'F5H_malignant_cells.pdf'))
-barplot(as.matrix(sums),
-        # names.arg = wide$Seed, # x-axis labels
-        cex.names = 1, # makes x-axis labels small enough to show all
-        col = sequential, # colors
-        las=2,
-        # xlab = "Seed Source",
-        ylab = "Proportion of cycling cancer cells",
-        xlim = c(0,10), # these two lines allow space for the legend
-        ylim = c(0,1),
-        width = 1, # these two lines allow space for the legend
-        legend = rownames(sums), #in order from top to bottom
-        fill = sequential[4:1],
-        )#, # 6:1 reorders so legend order matches graph
-#title = "Years")
-dev.off()
-
-#write.csv (sums, file.path (projdir, 'F5_H_malignant_cells.csv'))
-
-#### F5H cycling cells ####            
-sums <- cycling_malig
-pdf (file.path(figures.dir,'F5H_cycling_cells.pdf'))
-barplot(as.matrix(sums),
-        # names.arg = wide$Seed, # x-axis labels
-        cex.names = 1, # makes x-axis labels small enough to show all
-        col = sequential, # colors
-        las=2,
-        # xlab = "Seed Source",
-        ylab = "Proportion of cycling cancer cells",
-        xlim = c(0,10), # these two lines allow space for the legend
-        ylim = c(0,1),
-        width = 1, # these two lines allow space for the legend
-        legend = rownames(sums), #in order from top to bottom
-        fill = sequential[4:1],
-        )#, # 6:1 reorders so legend order matches graph
-#title = "Years")
-dev.off()
-
-#write.csv (sums, file.path (projdir, 'F5_H_cycling_cells.csv'))
-
-#### S9A ####            
-# Idents(tcell) <- "subtype"
-# markers <- FindAllMarkers(tcell, only.pos = T, max.cells.per.ident = 1000)
-
-# markers[,"cluster"] <- as.character(markers[,"cluster"]) # in case this is a factor
-
-# markers <- markers %>%
-#   arrange(cluster, desc(avg_log2FC)) %>% 
-#   group_by(cluster) %>%
-#   dplyr::slice(1:10)
-  
-
-# dir.create(paste0(figures.dir, "Figures_v4/Fig5_myeloid_bmast/"))
-#write.csv(markers, file = file.path(projdir, "Figures_v4/Fig6_tnk/tnk.markers.top10_rep.csv"))
-#markers <- read.csv(file = file.path(projdir, "Figures_v4/Fig6_tnk/tnk.markers.top10_rep.csv"))
-
-#order <- rev(unique(markers$cluster)) # already sorted
-
-#Idents(tcell) <- factor(Idents(tcell), levels = order)
-
-genes <- c(
-  "IL7R", 
-  "CCR7", 
-  "S100A4", 
-  "CD52", 
-  "GZMK", 
-  "EOMES",
-  "ISG15", 
-  "IFI6", 
-  "ZNF683",
-  "CD8B",
-  "KLRC1",
-  "AREG",
-  "FGFBP2",
-  "SPON2",
-  "KLRC2",
-  "STMN1", 
-  "MKI67", 
-  "LAG3", 
-  "HAVCR2", 
-  "HSPA1A", 
-  "JUN", 
-  "CXCL13", 
-  "NR3C1", 
-  "IL32", 
-  "FOXP3")
-#genes <- unique(markers$gene)
-
-tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
-tcell <- FindVariableFeatures(tcell)
-tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
-
-data <- tcell[,sample(colnames(tcell), 500)][["RNA"]]@data[genes,]
-data <- as.matrix(data)
-
-Idents(tcell) <- "subtype"
-Idents(tcell) = factor (Idents(tcell), levels = rev (c('CD4.Naive.CM','CD4.TRM','CD8.GZMK','CD8.IFN','CD8.TRM','NK.CD56.bright','NK.CD56.dim','NKT','T.Cycling','T.Exhausted','TFH','T.Stress','Treg')))
-dp = DotPlot(object = tcell, features = genes, scale = T, assay = "RNA") +
-  theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
-    scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
-    geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
-
-pdf(file.path(figures.dir,"S9A.pdf"), useDingbats = F, width = 15, height = 6)
-dp
-dev.off()
-
-#write.csv (dp$data, file.path (projdir, 'S8_A.csv'))
-
-#### S9B ####            
-bcell = bcell [, !bcell$subtype %in% c('Mast','Plasmacytoid.DC')]
-
-pdf (file.path (figures.dir,'S9B.pdf'))
-dp = DimPlot (bcell, group.by = 'subtype')
-dp
-dev.off()
-#write.csv (dp$data, file.path (projdir, 'S8_B'))
-
-
-
-#### S9E_left ####      
-genes <- c(
-  "CXCL13", 
-  "KLRB1", 
-  "KLRC1", 
-  "ITGB2", 
-  "TGFB1", 
-  "CTLA4",
-  "IFNG", 
-  "CXCR3", 
-  "TNF",
-  "ITGAL",
-  "ADGRE5",
-  "CD96",
-  "CD47",
-  "CLEC2D",
-  "CD44",
-  "SELL", 
-  "LAMP1", 
-  "TNFRSF14", 
-  "TIGIT", 
-  "HAVCR2", 
-  "PDCD1")
-#genes <- unique(markers$gene)
-
-tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
-tcell <- FindVariableFeatures(tcell)
-tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
-
-data <- tcell[,sample(colnames(tcell), 500)][["RNA"]]@data[genes,]
-data <- as.matrix(data)
-Idents(tcell) = tcell$subtype
-Idents(tcell) = factor (Idents(tcell), levels = rev (c('NK.CD56.dim','NK.CD56.bright','T.Stress','CD4.Naive.CM','CD8.GZMK','T.Cycling','T.Exhausted','Treg','TFH','NKT','CD8.TRM','CD8.IFN','CD4.TRM')))
-   
-pdf(file.path(figures.dir,"S9E_left.pdf"), useDingbats = F, width = 10, height = 5)
- dp = DotPlot(object = tcell, features = genes, scale = T, assay = "RNA") +
-  theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
-    scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
-    geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
-    dp
-dev.off()
-
-#write.csv (dp$data, file.path (projdir, 'S8_E.csv'))
-
-
-
-### S9E_right ####
-genes <- c('CXCL13', 'KLRB1', 'KLRC1', 'ITGB2', 'TGFB1', 'CTLA4', 'IFNG', 'CXCR3', 'TNF', 'ITGAL',
-           'ADGRE5', 'CD96', 'CD47','CLEC2D','CD44','SELL','LAMP1','TNFRSF14','TIGIT','HAVCR2','PDCD1')
-
-obj = tcell
-
-####
-obj.subtype.list <- SplitObject(obj, split.by = "subtype")
-avglog2fc.list <- list()
-pval.list <- list()
-
-for (i in 1:length(obj.subtype.list)) {
-  subtype <- obj.subtype.list[[i]]
-  
-  Idents(subtype) <- "orig.identSec"
-  subtype <- AverageExpression(subtype, slots = "counts", assays = "RNA")[[1]]
-  subtype <- subtype[,c(p53.filt[p53.filt %in% colnames(subtype)], WT.filt[WT.filt %in% colnames(subtype)])]
-  
-  subtype <- CreateSeuratObject(subtype)
-  
-  num.p53 <- length(p53.filt[p53.filt %in% colnames(subtype)])
-  num.wt <- length(WT.filt[WT.filt %in% colnames(subtype)])
-  
-  subtype$p53_status <- c(rep("p53_mut", num.p53), rep("WT", num.wt))
-  subtype$p53_status <- factor(subtype$p53_status, levels = c("WT", "p53_mut"))
-  
-  Idents(subtype) <- "p53_status"
-  subtype <- NormalizeData(subtype) 
-  subtype[["RNA"]]@counts <- subtype[["RNA"]]@counts[genes[genes %in% rownames(subtype[["RNA"]]@counts)],]
-  subtype[["RNA"]]@data <- subtype[["RNA"]]@data[genes[genes %in% rownames(subtype[["RNA"]]@data)],]
-  
-  markers <- FindMarkers(subtype, ident.1 = "p53_mut", ident.2 = "WT", logfc.threshold = 0, min.pct = 0, min.cells.feature = 0, min.cells.group = 0)
-  
-  markers <- markers[genes,]
-  print(head(markers))
-  
-  avglog2fc.list[[i]] <- as.data.frame(t(as.data.frame(markers$avg_log2FC)))
-  pval.list[[i]] <- as.data.frame(t(as.data.frame(markers$p_val)))
-  
-}
-
-
-###
-avglog2fc.df <- as.data.frame(rbindlist(avglog2fc.list))
-pvals.df <- as.data.frame(rbindlist(pval.list))
-dim(avglog2fc.df)
-dim(pvals.df)
-rownames(avglog2fc.df) <- names(obj.subtype.list)
-rownames(pvals.df) <- names(obj.subtype.list)
-colnames(avglog2fc.df) <- genes # new
-colnames(pvals.df) <- genes  # new
-
-pvals.df <- as.matrix(pvals.df)
-pvals.df[is.nan(pvals.df)] <- NA
-pvals.df <- as.data.frame(pvals.df)
-pvals.df[pvals.df <= 0.05] <- "**"
-pvals.df[pvals.df > 0.05 & pvals.df <= 0.1] <- "*"
-
-pvals.df[is.na(pvals.df)] <- ""
-pvals.df[pvals.df > 0.1] <- ""
-
-###
-range <- 2
-
-avglog2fc.df[,names(which(sapply(avglog2fc.df, function(x)all(is.na(x)))))] <- NULL # remove cols with all NAs
-pvals.df <- pvals.df[,colnames(avglog2fc.df)] # remove cols with all NAs
-
-names<-c("NK.CD56.dim", "NK.CD56.bright", "T.Stress", "CD4.Naive.CM", "CD8.GZMK", "T.Cycling", "T.Exhausted", "Treg", "TFH", "NKT", "CD8.TRM",
-         "CD8.IFN", "CD4.TRM")
-
-avglog2fc.df = avglog2fc.df[names,]
-pvals.df = pvals.df[names,]
-
-
-##############
-pdf(paste0(figures.dir, "S9E_right.pdf"), useDingbats = F, width = 20, height = 8) 
-pheatmap(avglog2fc.df, display_numbers = pvals.df, breaks = seq(-range, range, length.out = 100),  cellheight=13,cellwidth=13, 
-         cluster_rows = F,cluster_cols = F,
-         color = colorRampPalette(c("navy", "white", "firebrick"))(100))
-dev.off()
 
 
 # ----------------------------------------------------
@@ -758,3 +466,271 @@ metadata.p |>
     select(orig.identSec, p53_status, counts_PVR, CC.G2M1) |> 
     write.csv("../data/p53_fig6f_right.csv")
 # ----------------------------------------------------
+
+
+
+
+#### F6H ####            
+all_malig = data.frame (
+        row.names = c(
+        'PVR+CD274+',
+        'PVR+CD274-',
+        'PVR-CD274+',
+        'PVR-CD274-'),WT=c(0.004290886,
+     0.072632191,
+     0.024315023,
+     0.898761901),p53_mut=c(0.03597884,
+        0.15806878,
+        0.05740741,
+        0.74854497))
+cycling_malig = data.frame (
+        row.names = c(
+        'PVR+CD274+',
+        'PVR+CD274-',
+        'PVR-CD274+',
+        'PVR-CD274-'),
+        WT=c(
+        0.01237964,
+        0.10729023,
+        0.03507565,
+        0.84525447),
+        p53_mut=c(
+        0.1402525,
+        0.3029453,
+        0.0743338,
+        0.4824684))
+
+sums <- all_malig
+
+rownames(sums) <- sums$X
+sums$X <- NULL
+sequential <- brewer.pal(4, "Spectral")
+# sequential <- rev(sequential)
+
+#### F6H malignant cells ####            
+pdf (file.path(figures.dir,'F6H_malignant_cells.pdf'))
+barplot(as.matrix(sums),
+        # names.arg = wide$Seed, # x-axis labels
+        cex.names = 1, # makes x-axis labels small enough to show all
+        col = sequential, # colors
+        las=2,
+        # xlab = "Seed Source",
+        ylab = "Proportion of cycling cancer cells",
+        xlim = c(0,10), # these two lines allow space for the legend
+        ylim = c(0,1),
+        width = 1, # these two lines allow space for the legend
+        legend = rownames(sums), #in order from top to bottom
+        fill = sequential[4:1],
+        )#, # 6:1 reorders so legend order matches graph
+#title = "Years")
+dev.off()
+
+
+
+#### F6H cycling cells ####            
+sums <- cycling_malig
+pdf (file.path(figures.dir,'F6H_cycling_cells.pdf'))
+barplot(as.matrix(sums),
+        # names.arg = wide$Seed, # x-axis labels
+        cex.names = 1, # makes x-axis labels small enough to show all
+        col = sequential, # colors
+        las=2,
+        # xlab = "Seed Source",
+        ylab = "Proportion of cycling cancer cells",
+        xlim = c(0,10), # these two lines allow space for the legend
+        ylim = c(0,1),
+        width = 1, # these two lines allow space for the legend
+        legend = rownames(sums), #in order from top to bottom
+        fill = sequential[4:1],
+        )#, # 6:1 reorders so legend order matches graph
+#title = "Years")
+dev.off()
+
+
+
+#### S7A ####            
+
+genes <- c(
+  "IL7R", 
+  "CCR7", 
+  "S100A4", 
+  "CD52", 
+  "GZMK", 
+  "EOMES",
+  "ISG15", 
+  "IFI6", 
+  "ZNF683",
+  "CD8B",
+  "KLRC1",
+  "AREG",
+  "FGFBP2",
+  "SPON2",
+  "KLRC2",
+  "STMN1", 
+  "MKI67", 
+  "LAG3", 
+  "HAVCR2", 
+  "HSPA1A", 
+  "JUN", 
+  "CXCL13", 
+  "NR3C1", 
+  "IL32", 
+  "FOXP3")
+#genes <- unique(markers$gene)
+
+tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
+tcell <- FindVariableFeatures(tcell)
+tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
+
+data <- tcell[,sample(colnames(tcell), 500)][["RNA"]]@data[genes,]
+data <- as.matrix(data)
+
+Idents(tcell) <- "subtype"
+Idents(tcell) = factor (Idents(tcell), levels = rev (c('CD4.Naive.CM','CD4.TRM','CD8.GZMK','CD8.IFN','CD8.TRM','NK.CD56.bright','NK.CD56.dim','NKT','T.Cycling','T.Exhausted','TFH','T.Stress','Treg')))
+dp = DotPlot(object = tcell, features = genes, scale = T, assay = "RNA") +
+  theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
+    scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
+    geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
+
+pdf(file.path(figures.dir,"S7A.pdf"), useDingbats = F, width = 15, height = 6)
+dp
+dev.off()
+
+
+#### S7B ####            
+bcell = bcell [, !bcell$subtype %in% c('Mast','Plasmacytoid.DC')]
+
+pdf (file.path (figures.dir,'S7B.pdf'))
+dp = DimPlot (bcell, group.by = 'subtype')
+dp
+dev.off()
+
+
+
+#### S7E_left ####      
+genes <- c(
+  "CXCL13", 
+  "KLRB1", 
+  "KLRC1", 
+  "ITGB2", 
+  "TGFB1", 
+  "CTLA4",
+  "IFNG", 
+  "CXCR3", 
+  "TNF",
+  "ITGAL",
+  "ADGRE5",
+  "CD96",
+  "CD47",
+  "CLEC2D",
+  "CD44",
+  "SELL", 
+  "LAMP1", 
+  "TNFRSF14", 
+  "TIGIT", 
+  "HAVCR2", 
+  "PDCD1")
+#genes <- unique(markers$gene)
+
+tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
+tcell <- FindVariableFeatures(tcell)
+tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
+
+data <- tcell[,sample(colnames(tcell), 500)][["RNA"]]@data[genes,]
+data <- as.matrix(data)
+Idents(tcell) = tcell$subtype
+Idents(tcell) = factor (Idents(tcell), levels = rev (c('NK.CD56.dim','NK.CD56.bright','T.Stress','CD4.Naive.CM','CD8.GZMK','T.Cycling','T.Exhausted','Treg','TFH','NKT','CD8.TRM','CD8.IFN','CD4.TRM')))
+   
+pdf(file.path(figures.dir,"S7E_left.pdf"), useDingbats = F, width = 10, height = 5)
+ dp = DotPlot(object = tcell, features = genes, scale = T, assay = "RNA") +
+  theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
+    scale_color_gradientn(colours = rev(brewer.pal(11,"Spectral"))) +
+    geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.5)
+    dp
+dev.off()
+
+
+
+
+### S7E_right ####
+genes <- c('CXCL13', 'KLRB1', 'KLRC1', 'ITGB2', 'TGFB1', 'CTLA4', 'IFNG', 'CXCR3', 'TNF', 'ITGAL',
+           'ADGRE5', 'CD96', 'CD47','CLEC2D','CD44','SELL','LAMP1','TNFRSF14','TIGIT','HAVCR2','PDCD1')
+
+obj = tcell
+
+####
+obj.subtype.list <- SplitObject(obj, split.by = "subtype")
+avglog2fc.list <- list()
+pval.list <- list()
+
+for (i in 1:length(obj.subtype.list)) {
+  subtype <- obj.subtype.list[[i]]
+  
+  Idents(subtype) <- "orig.identSec"
+  subtype <- AverageExpression(subtype, slots = "counts", assays = "RNA")[[1]]
+  subtype <- subtype[,c(p53.filt[p53.filt %in% colnames(subtype)], WT.filt[WT.filt %in% colnames(subtype)])]
+  
+  subtype <- CreateSeuratObject(subtype)
+  
+  num.p53 <- length(p53.filt[p53.filt %in% colnames(subtype)])
+  num.wt <- length(WT.filt[WT.filt %in% colnames(subtype)])
+  
+  subtype$p53_status <- c(rep("p53_mut", num.p53), rep("WT", num.wt))
+  subtype$p53_status <- factor(subtype$p53_status, levels = c("WT", "p53_mut"))
+  
+  Idents(subtype) <- "p53_status"
+  subtype <- NormalizeData(subtype) 
+  subtype[["RNA"]]@counts <- subtype[["RNA"]]@counts[genes[genes %in% rownames(subtype[["RNA"]]@counts)],]
+  subtype[["RNA"]]@data <- subtype[["RNA"]]@data[genes[genes %in% rownames(subtype[["RNA"]]@data)],]
+  
+  markers <- FindMarkers(subtype, ident.1 = "p53_mut", ident.2 = "WT", logfc.threshold = 0, min.pct = 0, min.cells.feature = 0, min.cells.group = 0)
+  
+  markers <- markers[genes,]
+  print(head(markers))
+  
+  avglog2fc.list[[i]] <- as.data.frame(t(as.data.frame(markers$avg_log2FC)))
+  pval.list[[i]] <- as.data.frame(t(as.data.frame(markers$p_val)))
+  
+}
+
+
+###
+avglog2fc.df <- as.data.frame(rbindlist(avglog2fc.list))
+pvals.df <- as.data.frame(rbindlist(pval.list))
+dim(avglog2fc.df)
+dim(pvals.df)
+rownames(avglog2fc.df) <- names(obj.subtype.list)
+rownames(pvals.df) <- names(obj.subtype.list)
+colnames(avglog2fc.df) <- genes # new
+colnames(pvals.df) <- genes  # new
+
+pvals.df <- as.matrix(pvals.df)
+pvals.df[is.nan(pvals.df)] <- NA
+pvals.df <- as.data.frame(pvals.df)
+pvals.df[pvals.df <= 0.05] <- "**"
+pvals.df[pvals.df > 0.05 & pvals.df <= 0.1] <- "*"
+
+pvals.df[is.na(pvals.df)] <- ""
+pvals.df[pvals.df > 0.1] <- ""
+
+###
+range <- 2
+
+avglog2fc.df[,names(which(sapply(avglog2fc.df, function(x)all(is.na(x)))))] <- NULL # remove cols with all NAs
+pvals.df <- pvals.df[,colnames(avglog2fc.df)] # remove cols with all NAs
+
+names<-c("NK.CD56.dim", "NK.CD56.bright", "T.Stress", "CD4.Naive.CM", "CD8.GZMK", "T.Cycling", "T.Exhausted", "Treg", "TFH", "NKT", "CD8.TRM",
+         "CD8.IFN", "CD4.TRM")
+
+avglog2fc.df = avglog2fc.df[names,]
+pvals.df = pvals.df[names,]
+
+
+##############
+pdf(paste0(figures.dir, "S7E_right.pdf"), useDingbats = F, width = 20, height = 8) 
+pheatmap(avglog2fc.df, display_numbers = pvals.df, breaks = seq(-range, range, length.out = 100),  cellheight=13,cellwidth=13, 
+         cluster_rows = F,cluster_cols = F,
+         color = colorRampPalette(c("navy", "white", "firebrick"))(100))
+dev.off()
+
+

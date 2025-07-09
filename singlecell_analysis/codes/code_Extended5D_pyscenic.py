@@ -8,7 +8,7 @@ from pyscenic.rss import regulon_specificity_scores
 from pyscenic.plotting import plot_rss
 
 DATA_INPUT = "../data/"
-FIGURES_FOLDERNAME = "../../figures/Fig3_stroma/"
+FIGURES_FOLDERNAME = "../../figures/"
 os.makedirs(FIGURES_FOLDERNAME, exist_ok=True)
 
 sc.settings.figdir = FIGURES_FOLDERNAME
@@ -23,13 +23,10 @@ rss = regulon_specificity_scores(auc_mtx, mes.obs.subtype)
 rss
 
 ##### Extended 7D
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10, 3), dpi=100)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6, 3), dpi=100)
 plot_rss(rss, 'CAF.COL', ax=ax1)
-ax1.set_xlabel('')
 plot_rss(rss, 'CAF.ISG', ax=ax2)
 ax2.set_ylabel('')
-plot_rss(rss, 'CAF.Cycling', ax=ax3)
-ax3.set_xlabel('')
-ax3.set_ylabel('')
 
-plt.savefig(os.path.join(FIGURES_FOLDERNAME, "Ext_Fig7D.pdf"), format='pdf', dpi=100)
+
+plt.savefig(os.path.join(FIGURES_FOLDERNAME, "Ext_Fig5D.pdf"), format='pdf', dpi=100)

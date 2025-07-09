@@ -1,5 +1,5 @@
 ######################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
-######################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FIGURE 3 - EXTENDED DATA 7 - MESENCHYMAL PANELS
+######################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FIGURE 4 - EXTENDED DATA 5 - MESENCHYMAL PANELS
 library(ggplot2)
 library(Seurat)
 library(SeuratObject)
@@ -28,7 +28,6 @@ total.samples <- c(p53.filt, WT.filt, other)
 data.path <- "../data/"
 figures.dir <- "../../figures/"
 
-if (!file.exists(paste0(figures.dir,'Fig3_stroma/'))){dir.create(paste0(figures.dir,'Fig3_stroma/'), recursive=TRUE)}
 
 ######
 source(paste0(data.path, "/R_utils/plotutils.R"))
@@ -40,11 +39,11 @@ source(paste0(data.path, "/R_utils/color.R"))
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Figure 3E
+##################### Figure 4E
 mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 ###########
-pdf(paste0(figures.dir, "Fig3_stroma/Fig3E.pdf"), useDingbats = F, width = 10)
+pdf(paste0(figures.dir, "Fig4E.pdf"), useDingbats = F, width = 10)
 p = DimPlot(mes, group.by = "subtype")
 p
 dev.off()
@@ -53,8 +52,8 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Figure 3F
-meta = get(load(paste0(data.path, "Fig3F_metadata_labeltrans.Rda")))
+##################### Figure 4F
+meta = get(load(paste0(data.path, "Fig4F_metadata_labeltrans.Rda")))
 
 conf_mtx <- matrix(0, ncol = length(unique(meta$predicted.id)), nrow = length(unique(meta$subtype)))
 colnames(conf_mtx) <- unique(meta$predicted.id)
@@ -73,7 +72,7 @@ conf_mtx2 = conf_mtx[c("Vascular Smooth Muscle","Airway Smooth Muscle","Fibromyo
                      c("Pericyte", "Pericyte.EMT","SmoothMuscle.Airway","SmoothMuscle.Vascular","CAF.ADH1B","CAF.Adventitial","Myofibroblast",
                        "CAF.COLs","CAF.Complement","CAF.ISGs", "CAF.Cycling","CAF.Ribo","CAF.APOE")]
 
-pdf(paste0(figures.dir, "Fig3_stroma/Fig3F.pdf"), height = 5, width = 7, useDingbats=FALSE)
+pdf(paste0(figures.dir, "Fig4F.pdf"), height = 5, width = 7, useDingbats=FALSE)
 par(mar = c(10, 10, 10, 10))
 heatmap.2(conf_mtx2, tracecol=NA, margins=c(12,14), col=bluered(100), Rowv=F,Colv=F,dendrogram="none")
 dev.off()
@@ -82,7 +81,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Figure 3G
+##################### Figure 4G
 # regulon heatmap
 df <- read.csv(paste0(data.path, "mes_pyscenic_subtype_zscore.csv"), row.names = 1)
 df2 <- dcast(df, regulon ~ subtype, value.var = "Z")
@@ -99,7 +98,7 @@ rownames(df2) = c("CAF.ADH1B", "CAF.APOE", "CAF.COLs", "CAF.Complement",
                   "Pericyte", "Pericyte.PTN", "SmoothMuscle.Airway", "SmoothMuscle.Vascular")
 
 ############
-pdf(paste0(figures.dir, "Fig3_stroma/Fig3G.pdf"), useDingbats = F, width = 10, height = 3)
+pdf(paste0(figures.dir, "Fig4G.pdf"), useDingbats = F, width = 10, height = 3)
 p<-Heatmap(df2, cluster_rows = FALSE, cluster_columns = FALSE)
 p
 dev.off()
@@ -108,7 +107,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Figure 3H
+##################### Figure 4H
 mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 comp.df <- as.matrix(table(mes$orig.identSec, mes$subtype))
@@ -146,7 +145,7 @@ mean.plots.2 = list()
 mean.plots.2[[1]] = mean.plots[[10]] ## Pericyte
 mean.plots.2[[2]] = mean.plots[[1]]   ## CAF.ADH1B
 
-pdf(paste0(figures.dir, "Fig3_stroma/Fig3H.pdf"), width = 6, height = 3, useDingbats=FALSE)
+pdf(paste0(figures.dir, "Fig4H.pdf"), width = 6, height = 3, useDingbats=FALSE)
 cowplot::plot_grid(plotlist = mean.plots.2, ncol=2)
 dev.off()
 
@@ -155,7 +154,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-########## Extended 7A
+########## Extended 5A
 mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 genes <- c("PTGDS", "ADH1B", "RGCC", "TIMP1", "RGS2", "APOE", "CCDC80", "C7", "C3", "COL1A2", "COL3A1", "COL1A1", "TMEM176B", "TMEM176A", "CYP1B1", "TUBA1B", "STMN1",
@@ -173,7 +172,7 @@ names<-c("CAF.ADH1B","CAF.APOE","CAF.Adventitial","CAF.COLs","CAF.Complement","C
 Idents(mes) <- 'subtype'
 Idents(mes) <- factor(Idents(mes), levels = rev(names)) 
 
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig7A.pdf"), useDingbats = F, width = 14, height = 5)
+pdf(paste0(figures.dir, "Ext_Fig5A.pdf"), useDingbats = F, width = 14, height = 5)
 p = DotPlot(object = mes, features = genes, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
   scale_colour_gradient2(low = "navy", high = "firebrick") +
@@ -185,7 +184,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 7B
+##################### Extended 5B
 mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 DefaultAssay(mes) <- "RNA"
@@ -212,7 +211,7 @@ custom_color_scale <- scale_color_gradientn(
 p <- lapply(p, function (x) x + custom_color_scale)
 for(i in 1:length(p)) {p[[i]] <- p[[i]] + NoAxes()}
 
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig7B.pdf"), width = 15, height = 10, useDingbats = F)
+pdf(paste0(figures.dir, "Ext_Fig5B.pdf"), width = 15, height = 10, useDingbats = F)
 cowplot::plot_grid(plotlist = p, ncol=4)
 dev.off()
 
@@ -221,7 +220,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-#################### Extended 7C
+#################### Extended 5C
 mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 # Stacked bar plot
@@ -240,7 +239,7 @@ names<-c("CAF.ADH1B","CAF.APOE","CAF.Adventitial","CAF.COLs","CAF.Complement","C
 Dout <- Dout[rev(names),]
 
 ############
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig7C.pdf"), height = 5, width = 14, useDingbats=FALSE)
+pdf(paste0(figures.dir, "Ext_Fig5C.pdf"), height = 5, width = 14, useDingbats=FALSE)
 par(mar=c(5, 4.1, 4.1, 2.1))
 barplot2(Dout, main="Cell type composition", legend = rownames(Dout),col = my_color_palette, xlim=c(0, ncol(Dout) + 15), las=2,
          legend.text=TRUE,args.legend=list(x=ncol(Dout)+15,y=max(colSums(Dout)),bty = "n"))
@@ -250,7 +249,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended Figure 7E 
+##################### Extended Figure 5E 
 meta = get(load(paste0(data.path, "meta.caf.modulescore.top20.paper.top20.ours.rna.assay.Rda")))
 
 paper.score = meta[,c(36:43)]
@@ -269,7 +268,7 @@ rownames(res2) = gsub("Adm20.", "", rownames(res2))
 res2 = res2[c("CAF.COLs", "CAF.Complement", "CAF.Adventitial", "CAF.ADH1B", "CAF.APOE", "Myofibroblast", "CAF.ISGs", "CAF.Ribo"),
             c("c2.CAF.infla", "c4.CAF.adi", "c7.CAF.PN", "c1.CAF.myo", "c8.CAF.ap", "c6.CAF.EndMT" )]
 
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig7E.pdf"), useDingbats = F, width = 8, height = 8) 
+pdf(paste0(figures.dir, "Ext_Fig5E.pdf"), useDingbats = F, width = 8, height = 8) 
 Heatmap(res2, cluster_rows = F, cluster_columns = F, name = "Pearson.cor")
 dev.off()
 
@@ -277,7 +276,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 7I
+##################### Extended Figure 5I
 df <- get(load(paste0(data.path, "lig_rec_differential_highlvl_df_not_allzeros.Rda")))
 
 df <- df[grepl("Mesenchymal", df$cell.pair, fixed=TRUE),]
@@ -304,7 +303,7 @@ custom_color_scale <- scale_fill_gradientn(
 ) 
 
 ############ 
-pdf(file = paste0(figures.dir, "Fig3_stroma/Ext_Fig7I.pdf"), useDingbats = F, height = 15, width = 8.3)
+pdf(file = paste0(figures.dir, "Ext_Fig5I.pdf"), useDingbats = F, height = 15, width = 8.3)
 p<-ggplot(data = df2, mapping = aes(x=cell.pair, y=int_name, color=p53_wt_prop_diff, size=p53_wt_neglogpval_proptest))+geom_point(shape = 21, aes(colour = as.factor(signif), fill = p53_wt_prop_diff))+
   scale_colour_manual(values=c("00FFFFFF", "darkgray", "black")) + theme_minimal() +
   custom_color_scale +
@@ -317,7 +316,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 7J_top
+##################### Extended 5J_top
 genes <- c("CCL2", "ITGA8", "ITGB1", "TGFBR2", "PTPRK", "COPA", "TNFRSF1A", "TGFB3", "VEGFB", "ITGA1", "NRP1", "ACVR1", "COL16A1", "NOTCH2", "FBN1", "PGF",
            "NOTCH3", "AXL", "FN1", "TNC", "ITGA5", "COL15A1", "NAMPT", "VEGFA", "PLAUR", "COL12A1")
 
@@ -333,7 +332,7 @@ names<-c("CAF.ADH1B","Myofibroblast","CAF.Ribo","Pericyte","Pericyte.EMT","Smoot
 Idents(mes) <- 'subtype'
 Idents(mes) <- factor(Idents(mes), levels = rev(names)) 
 
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig7J_top.pdf"), useDingbats = F, width = 14, height = 5)
+pdf(paste0(figures.dir, "Ext_Fig5J_top.pdf"), useDingbats = F, width = 14, height = 5)
 p = DotPlot(object = mes, features = genes, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
   scale_colour_gradient2(low = "navy", high = "firebrick") +
@@ -345,7 +344,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 7J_bottom
+##################### Extended 5J_bottom
 mes <- get(load("../dropbox_data/mes.final.nodoublets.Rda"))
 
 genes <- c("CCL2", "ITGA8", "ITGB1", "TGFBR2", "PTPRK", "COPA", "TNFRSF1A", "TGFB3", "VEGFB", "ITGA1", "NRP1", "ACVR1", "COL16A1", "NOTCH2", "FBN1", "PGF",
@@ -419,7 +418,7 @@ avglog2fc.df = avglog2fc.df[names,]
 pvals.df = pvals.df[names,]
 
 ##########
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig7J_bottom.pdf"), useDingbats = F, width = 20, height = 8) 
+pdf(paste0(figures.dir, "Ext_Fig5J_bottom.pdf"), useDingbats = F, width = 20, height = 8) 
 pheatmap(avglog2fc.df, display_numbers = pvals.df, breaks = seq(-range, range, length.out = 100),  cellheight=13,cellwidth=13, 
          cluster_rows = F,cluster_cols = F,
          color = colorRampPalette(c("navy", "white", "firebrick"))(100))

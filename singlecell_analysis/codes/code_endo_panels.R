@@ -1,5 +1,5 @@
 ######################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
-######################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FIGURE 3 - EXTENDED DATA 6 - ENDOTHELIAL PANELS
+######################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FIGURE 4 - EXTENDED DATA 4 - ENDOTHELIAL PANELS
 library(ggplot2)
 library(Seurat)
 library(SeuratObject)
@@ -28,7 +28,6 @@ total.samples <- c(p53.filt, WT.filt, other)
 data.path <- "../data/"
 figures.dir <- "../../figures/"
 
-if (!file.exists(paste0(figures.dir,'Fig3_stroma/'))){dir.create(paste0(figures.dir,'Fig3_stroma/'), recursive=TRUE)}
 
 ######
 source(paste0(data.path, "/R_utils/plotutils.R"))
@@ -40,11 +39,11 @@ source(paste0(data.path, "/R_utils/color.R"))
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Figure 3A
+##################### Figure 4A
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 ###########
-pdf(paste0(figures.dir, "Fig3_stroma/Fig3A.pdf"), useDingbats = F, width = 10)
+pdf(paste0(figures.dir, "Fig4A.pdf"), useDingbats = F, width = 10)
 p = DimPlot(end, group.by = "subtype")
 p
 dev.off()
@@ -53,7 +52,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Figure 3B
+##################### Figure 4B
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 comp.df <- as.matrix(table(end$orig.identSec, end$subtype))
@@ -91,7 +90,7 @@ mean.plots.2 = list()
 mean.plots.2[[1]] = mean.plots[[1]] ## Aerocyte
 mean.plots.2[[2]] = mean.plots[[2]]   ## Arterial
 
-pdf(paste0(figures.dir, "Fig3_stroma/Fig3B.pdf"), width = 6, height = 3, useDingbats=FALSE)
+pdf(paste0(figures.dir, "Fig4B.pdf"), width = 6, height = 3, useDingbats=FALSE)
 cowplot::plot_grid(plotlist = mean.plots.2, ncol=2)
 dev.off()
 
@@ -99,7 +98,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### 3C
+##################### Figure 4C
 df <- get(load(paste0(data.path, "lig_rec_differential_highlvl_df_not_allzeros.Rda")))
 
 df <- df[grepl("Endothelial", df$cell.pair, fixed=TRUE),]
@@ -127,7 +126,7 @@ custom_color_scale <- scale_fill_gradientn(
 ) 
 
 ############
-pdf(file = paste0(figures.dir, "Fig3_stroma/Fig3C.pdf"), useDingbats = F, height = 15, width = 8.3)
+pdf(file = paste0(figures.dir, "Fig4C.pdf"), useDingbats = F, height = 15, width = 8.3)
 p<-ggplot(data = df2, mapping = aes(x=cell.pair, y=int_name, color=p53_wt_prop_diff, size=p53_wt_neglogpval_proptest))+geom_point(shape = 21, aes(colour = as.factor(signif), fill = p53_wt_prop_diff))+
   scale_colour_manual(values=c("00FFFFFF", "darkgray", "black")) + theme_minimal() +
   custom_color_scale +
@@ -140,7 +139,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 6B
+##################### Extended 4B
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 genes <- c("HPGD", "EDNRB", "S100A4", "IGFBP3", "DKK2", "FBLN5", "FCN3", "CD36", "IL7R", "CCL21", "TFF3", "FABP4", "CPE", "C7", "CLU", "SPRY1", "ZNF385D",
@@ -157,7 +156,7 @@ Idents(end) <- 'subtype'
 Idents(end) <- factor(Idents(end), levels = rev(names)) 
 
 ###########
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig6B.pdf"), useDingbats = F, width = 14, height = 5)
+pdf(paste0(figures.dir, "Ext_Fig4B.pdf"), useDingbats = F, width = 14, height = 5)
 p = DotPlot(object = end, features = genes, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
   scale_colour_gradient2(low = "navy", high = "firebrick") +
@@ -169,7 +168,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 6C
+##################### Extended 4C
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 DefaultAssay(end) <- "RNA"
@@ -196,7 +195,7 @@ custom_color_scale <- scale_color_gradientn(
 p <- lapply(p, function (x) x + custom_color_scale)
 for(i in 1:length(p)) {p[[i]] <- p[[i]] + NoAxes()}
 
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig6C.pdf"), width = 15, height = 10, useDingbats = F)
+pdf(paste0(figures.dir, "Ext_Fig4C.pdf"), width = 15, height = 10, useDingbats = F)
 cowplot::plot_grid(plotlist = p, ncol=3)
 dev.off()
 
@@ -204,7 +203,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 6D
+##################### Extended 4D
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 # Stacked bar plot
@@ -222,7 +221,7 @@ names<-c("Aerocyte", "Arterial", "Capillary", "Lymphatic", "Pulmonary.Venous", "
 Dout <- Dout[rev(names),]
 
 ############
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig6D.pdf"), height = 5, width = 14, useDingbats=FALSE)
+pdf(paste0(figures.dir, "Ext_Fig4D.pdf"), height = 5, width = 14, useDingbats=FALSE)
 par(mar=c(5, 4.1, 4.1, 2.1))
 barplot2(Dout, main="Cell type composition", legend = rownames(Dout),col = my_color_palette, xlim=c(0, ncol(Dout) + 15), las=2,
          legend.text=TRUE,args.legend=list(x=ncol(Dout)+15,y=max(colSums(Dout)),bty = "n"))
@@ -232,7 +231,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 6F_top
+##################### Extended 4F_top
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 genes <- c('PGF', 'FN1','ITGA9','TNFRSF10D','HAVCR2','COL6A2','TNFRSF10B','NAMPT','NRP2','ITGB1','BAG6','NRP1','NOTCH1','COPA','CD55','FLT1','PODXL',
@@ -249,7 +248,7 @@ Idents(end) <- 'subtype'
 Idents(end) <- factor(Idents(end), levels = rev(names)) 
 
 ###########
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig6F_top.pdf"), useDingbats = F, width = 14, height = 5)
+pdf(paste0(figures.dir, "Ext_Fig4F_top.pdf"), useDingbats = F, width = 14, height = 5)
 p = DotPlot(object = end, features = genes, scale = T) +
   theme(axis.text.x = element_text(angle = 45, hjust=1), panel.border = element_rect(colour = "black", fill=NA, size=0.5), panel.grid.major = element_line(colour = "gainsboro")) + 
   scale_colour_gradient2(low = "navy", high = "firebrick") +
@@ -261,7 +260,7 @@ dev.off()
 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-##################### Extended 6F_bottom
+##################### Extended 4F_bottom
 end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
 
 genes <- c('PGF', 'TNFSF10', 'FN1','ITGA9','TNFRSF10D','HAVCR2','COL6A2','TNFRSF10B','NAMPT','NRP2','ITGB1','BAG6','NRP1','NOTCH1','COPA','CD55','FLT1','PODXL',
@@ -332,7 +331,7 @@ avglog2fc.df = avglog2fc.df[names,]
 pvals.df = pvals.df[names,]
 
 ##########
-pdf(paste0(figures.dir, "Fig3_stroma/Ext_Fig6F_bottom.pdf"), useDingbats = F, width = 20, height = 8) 
+pdf(paste0(figures.dir, "Ext_Fig4F_bottom.pdf"), useDingbats = F, width = 20, height = 8) 
 pheatmap(avglog2fc.df, display_numbers = pvals.df, breaks = seq(-range, range, length.out = 100),  cellheight=13,cellwidth=13, 
          cluster_rows = F,cluster_cols = F,
          color = colorRampPalette(c("navy", "white", "firebrick"))(100))
