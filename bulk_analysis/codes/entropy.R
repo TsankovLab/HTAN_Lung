@@ -100,19 +100,19 @@ createEntropyViolinplots <- function(plotVar,
 # ----------------------------------------------------
 # generate figures
 # ----------------------------------------------------
-# FIG 2I
-p.2i.tcga <- createEntropyViolinplots(plotVar = "ccat", outfileName = "2i.tcga",
+# FIG 3H
+p.3h.tcga <- createEntropyViolinplots(plotVar = "ccat", outfileName = "3h.tcga",
                          plotDF = combined.luad.2018@meta.data, 
                          xVar = "p53_status", 
                          comparisonList = combn(levels(combined.luad.2018@meta.data[["p53_status"]]), m = 2, simplify = FALSE))
-p.2i.cptac <- createEntropyViolinplots(plotVar = "ccat.v", outfileName = "2i.cptac",
+p.3h.cptac <- createEntropyViolinplots(plotVar = "ccat.v", outfileName = "3h.cptac",
                          plotDF = cptac.luad.prot@meta.data, 
                          titleStr = "Bulk entropy CPTAC", 
                          xVar = "p53_status", 
                          comparisonList = list(c("WT", "mut")))
-p.2i.tcga + p.2i.cptac
-ggsave(filename = file.path(paste0(figures.dir, "2i.pdf")), 
-       plot = (p.2i.tcga + p.2i.cptac), 
+p.3h.tcga + p.3h.cptac
+ggsave(filename = file.path(paste0(figures.dir, "3h.pdf")), 
+       plot = (p.3h.tcga + p.3h.cptac), 
        device = "pdf", 
        width = 3 * 2, 
        height = 4)
@@ -132,22 +132,22 @@ ggsave(filename = file.path(paste0(figures.dir, "2i.pdf")),
 #        height = 5)
 
 
-# EXTENDED FIG 5B
+# FIG 3K
 levels.tmp <- levels(combined.luad.2018@meta.data$DNE_LOFclass)
-p.s5bA <- createEntropyViolinplots(plotVar = "ccat", outfileName = "s5bA",
+p.3kA <- createEntropyViolinplots(plotVar = "ccat", outfileName = "3kA",
                          titleStr = NULL,
                          plotDF = combined.luad.2018@meta.data, 
                          xVar = "DNE_LOFclass", 
                          comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)))
 levels.tmp <- levels(combined.luad.2018@meta.data$impact)
-p.s5bB <- createEntropyViolinplots(plotVar = "ccat", outfileName = "s5bB",
+p.3kB <- createEntropyViolinplots(plotVar = "ccat", outfileName = "3kB",
                          titleStr = NULL,
                          plotDF = combined.luad.2018@meta.data, 
                          xVar = "impact", 
                          comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)))
-p.s5bA + p.s5bB + patchwork::plot_layout(axes = "collect_y")
-ggsave(filename = file.path(paste0(figures.dir, "s5b.pdf")), 
-       plot = (p.s5bA + p.s5bB + patchwork::plot_layout(axes = "collect_y")), 
+p.3kA + p.3kB + patchwork::plot_layout(axes = "collect_y")
+ggsave(filename = file.path(paste0(figures.dir, "3k.pdf")), 
+       plot = (p.3kA + p.3kB + patchwork::plot_layout(axes = "collect_y")), 
        device = "pdf", 
        width = 4 * 2, 
        height = 5)
@@ -182,7 +182,7 @@ ggsave(filename = file.path(paste0(figures.dir, "s5b.pdf")),
 #        width = 5, 
 #        height = 5)   
 # # ----------------------------------------------------
-# # previous plot but with adjacent normals
+# # FIG 3J- previous plot but with adjacent normals
 # # ----------------------------------------------------
 df <- luad.2018@meta.data
 df.krasSubsets <- df |> 
@@ -210,7 +210,7 @@ p.new_entropy.comut4.adjacentNormal <- createEntropyViolinplots(plotVar = "ccat"
                                                                 xVar = "comut4", 
                                                                 comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)))
                                                                          
-ggsave(filename = file.path(paste0(figures.dir, "s5c.pdf")), 
+ggsave(filename = file.path(paste0(figures.dir, "3j.pdf")), 
        plot = p.new_entropy.comut4.adjacentNormal, 
        device = "pdf", 
        width = 6, 
