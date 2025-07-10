@@ -132,15 +132,44 @@ createBoxplots(plotVector = v.2e, df.pvals = df.pvals.tcga,
                plotDF = luad.2018@meta.data, 
                outfileName = "2e")
 
-# FIG 4D
-v.4d <- c("SPP1")
 
-createBoxplots(plotVector = v.4d, w = 3, h = 4, df.pvals = df.pvals.tcga,
+# EXTENDED FIG 3A, D, E
+v.s3ade <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis/Hypox", "pEMT") # row 1
+
+levels.tmp <- levels(luad.2018@meta.data$comut)
+createBoxplots(plotVector = v.s3ade, 
+               xVar = "comut", 
+               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-6],
+               numCol = 5, 
+               plotDF = luad.2018@meta.data, 
+               outfileName = "3a")
+
+levels.tmp <- levels(luad.2018@meta.data$DNE_LOFclass)
+createBoxplots(plotVector = v.s3ade, 
+               xVar = "DNE_LOFclass", 
+               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
+               numCol = 5, 
+               plotDF = luad.2018@meta.data, 
+               outfileName = "3d")
+
+levels.tmp <- levels(luad.2018@meta.data$impact)
+createBoxplots(plotVector = v.s3ade, 
+               xVar = "impact", 
+               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
+               numCol = 5, 
+               plotDF = luad.2018@meta.data, 
+               outfileName = "3e")
+
+
+# FIG 5D
+v.5d <- c("SPP1")
+
+createBoxplots(plotVector = v.5d, w = 3, h = 4, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 1, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "4d")
+               outfileName = "5d")
 
 # EXTENDED FIG 1D
 v.s1d <- c("B.cells", "Fibroblast", "Cancer", "Mast", "T.CD4+", # row 1
@@ -153,165 +182,142 @@ createBoxplots(plotVector = v.s1d, df.pvals = df.pvals.tcga,
                plotDF = luad.2018@meta.data, 
                outfileName = "s1d")
 
-# EXTENDED FIG 4A,C,D
-v.s4acd <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis/Hypox", "pEMT") # row 1
 
-levels.tmp <- levels(luad.2018@meta.data$comut)
-createBoxplots(plotVector = v.s4acd, 
-               xVar = "comut", 
-               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-6],
-               numCol = 5, 
-               plotDF = luad.2018@meta.data, 
-               outfileName = "s4a")
-
-levels.tmp <- levels(luad.2018@meta.data$DNE_LOFclass)
-createBoxplots(plotVector = v.s4acd, 
-               xVar = "DNE_LOFclass", 
-               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
-               numCol = 5, 
-               plotDF = luad.2018@meta.data, 
-               outfileName = "s4c")
-
-levels.tmp <- levels(luad.2018@meta.data$impact)
-createBoxplots(plotVector = v.s4acd, 
-               xVar = "impact", 
-               comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
-               numCol = 5, 
-               plotDF = luad.2018@meta.data, 
-               outfileName = "s4d")
-
-# EXTENDED FIG 4G
-v.s4g <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis.Hypox", "pEMT")
-createBoxplots(plotVector = v.s4g, 
+# EXTENDED FIG 3B
+v.s3b <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis.Hypox", "pEMT")
+createBoxplots(plotVector = v.s3b, 
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 5, 
                plotDF = cptac.luad.prot@meta.data, 
-               outfileName = "s4g")
+               outfileName = "s3b")
 
-# EXTENDED FIG 4H
-v.s4h <- c("p53_targets", "AT2", "CC.G2M")
+# EXTENDED FIG 3C
+v.s3c <- c("p53_targets", "AT2", "CC.G2M")
 
 levels.tmp <- levels(cptac.luad.prot@meta.data$DNE_LOFclass)
-createBoxplots(plotVector = v.s4h, w = 3.5, h = 5,
+createBoxplots(plotVector = v.s3c, w = 3.5, h = 5,
                xVar = "DNE_LOFclass", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 3, 
                plotDF = cptac.luad.prot@meta.data, 
-               outfileName = "s4hA")
+               outfileName = "s4cA")
 
 levels.tmp <- levels(cptac.luad.prot@meta.data$impact)
-createBoxplots(plotVector = v.s4h, w = 3.5, h = 5,
+createBoxplots(plotVector = v.s3c, w = 3.5, h = 5,
                xVar = "impact", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 3, 
                plotDF = cptac.luad.prot@meta.data, 
-               outfileName = "s4hB")
+               outfileName = "s3cB")
 
-# EXTENDED FIG 6A
-v.s6a <- c("Endothelial")
+# EXTENDED FIG 4A
+v.s4a <- c("Endothelial")
 
 levels.tmp <- levels(luad.2018@meta.data$comut)
-createBoxplots(plotVector = v.s6a, w = 3, h = 5,
+createBoxplots(plotVector = v.s4a, w = 3, h = 5,
                xVar = "comut", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-6],
                numCol = 1, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s6aA")
+               outfileName = "s4aA")
 
 levels.tmp <- levels(luad.2018@meta.data$DNE_LOFclass)
-createBoxplots(plotVector = v.s6a, w = 3, h = 5,
+createBoxplots(plotVector = v.s4a, w = 3, h = 5,
                xVar = "DNE_LOFclass", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 1, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s6aB")
+               outfileName = "s4aB")
 
-# EXTENDED FIG 6E
-v.s6e <- c("Aerocyte", "Arterial")
+# EXTENDED FIG 4E
+v.s4e <- c("Aerocyte", "Arterial")
 
-createBoxplots(plotVector = v.s6e, w = 3, h = 4, df.pvals = df.pvals.tcga,
+createBoxplots(plotVector = v.s4e, w = 3, h = 4, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 2, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s6e")
+               outfileName = "s4e")
 
-# EXTENDED FIG 7G
-v.s7g <- c("CAF.ADH1B")
+# EXTENDED FIG 5G
+v.s5g <- c("CAF.ADH1B")
 
-createBoxplots(plotVector = v.s7g, w = 3, h = 4, df.pvals = df.pvals.tcga,
+createBoxplots(plotVector = v.s5g, w = 3, h = 4, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 1, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s7g")
+               outfileName = "s5g")
 
-# EXTENDED FIG 7H
-v.s7h <- c("Pericytes")
+# EXTENDED FIG 5H
+v.s5h <- c("Pericytes")
 
 levels.tmp <- levels(luad.2018@meta.data$comut)
-createBoxplots(plotVector = v.s7h, w = 3, h = 5, 
+createBoxplots(plotVector = v.s5h, w = 3, h = 5, 
                xVar = "comut", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-6],
                numCol = 1, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s7hA")
+               outfileName = "s5hA")
 
 levels.tmp <- levels(luad.2018@meta.data$DNE_LOFclass)
-createBoxplots(plotVector = v.s7h, w = 3, h = 5,
+createBoxplots(plotVector = v.s5h, w = 3, h = 5,
                xVar = "DNE_LOFclass", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 1, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s7hB")
+               outfileName = "s5hB")
 
-# EXTENDED FIG 8B
-v.s8b <- c("CXCL9", "CXCL10", "CXCL11")
 
-createBoxplots(plotVector = v.s8b, w = 3, h = 4, df.pvals = df.pvals.tcga,
+# EXTENDED FIG 6B
+v.s6b <- c("TAM.CXCL")
+
+createBoxplots(plotVector = v.s6b, w = 3, h = 4, df.pvals = df.pvals.tcga,
+               xVar = "p53_status", 
+               comparisonList = list(c("WT", "mut")),
+               numCol = 1, 
+               plotDF = luad.2018@meta.data, 
+               outfileName = "s6b")
+
+
+# EXTENDED FIG 6C
+v.s6c <- c("CXCL9", "CXCL10", "CXCL11")
+
+createBoxplots(plotVector = v.s6c, w = 3, h = 4, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 3, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s8b")
+               outfileName = "s6c")
 
-# EXTENDED FIG 8C
-v.s8c <- c("TAM.CXCL")
 
-createBoxplots(plotVector = v.s8c, w = 3, h = 4, df.pvals = df.pvals.tcga,
-               xVar = "p53_status", 
-               comparisonList = list(c("WT", "mut")),
-               numCol = 1, 
-               plotDF = luad.2018@meta.data, 
-               outfileName = "s8c")
-
-# EXTENDED FIG 8D,E
+# EXTENDED FIG 6D,E
 v.s8de <- c("SPP1", "CXCL9", "CXCL10", "CXCL11")
 
 levels.tmp <- levels(luad.2018@meta.data$comut)
-createBoxplots(plotVector = v.s8de, w = 3, h = 5,
+createBoxplots(plotVector = v.s6de, w = 3, h = 5,
                xVar = "comut", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x))[-6],
                numCol = 4, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s8d")
+               outfileName = "s6d")
 
 levels.tmp <- levels(luad.2018@meta.data$DNE_LOFclass)
-createBoxplots(plotVector = v.s8de, w = 3, h = 5,
+createBoxplots(plotVector = v.s6de, w = 3, h = 5,
                xVar = "DNE_LOFclass", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 4, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s8eA")
+               outfileName = "s6eA")
 
 levels.tmp <- levels(luad.2018@meta.data$impact)
-createBoxplots(plotVector = v.s8de, w = 3, h = 5,
+createBoxplots(plotVector = v.s6de, w = 3, h = 5,
                xVar = "impact", 
                comparisonList = lapply(setdiff(levels.tmp, "WT"), function(x) c("WT", x)),
                numCol = 4, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s8eB")
+               outfileName = "s6eB")
 
 # EXTENDED FIG 9D
 v.s9d <- c("T.Exhausted", "CD8.GZMK")
@@ -323,24 +329,24 @@ createBoxplots(plotVector = v.s9d, w = 3, h = 4, df.pvals = df.pvals.tcga,
                plotDF = luad.2018@meta.data, 
                outfileName = "s9d")
 
-# EXTENDED FIG 9F
-v.s9f <- c("CD274", "CD86", "PVR", "PDCD1", "CTLA4", "TIGIT")
+# EXTENDED FIG 7F
+v.s7f <- c("CD274", "CD86", "PVR", "PDCD1", "CTLA4", "TIGIT")
 
-createBoxplots(plotVector = v.s9f, df.pvals = df.pvals.tcga,
+createBoxplots(plotVector = v.s7f, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 6, 
                plotDF = luad.2018@meta.data, 
-               outfileName = "s9f")
+               outfileName = "s7f")
 
-# EXTENDED FIG 9G
-v.s9g <- c("PVR", "CD274")
-createBoxplots(plotVector = v.s9g, w = 3, h = 4, 
+# EXTENDED FIG 7G
+v.s7g <- c("PVR", "CD274")
+createBoxplots(plotVector = v.s7g, w = 3, h = 4, 
                xVar = "p53_status", 
                comparisonList = list(c("WT", "mut")),
                numCol = 2, 
                plotDF = cptac.luad.prot@meta.data, 
-               outfileName = "s9g")
+               outfileName = "s7g")
 # ----------------------------------------------------
 # smoking pack years
 # ----------------------------------------------------
