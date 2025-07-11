@@ -22,9 +22,9 @@ df.km <- read_csv(file.path(data.path, "df.km.csv")) |> column_to_rownames("...1
 # ----------------------------------------------------
 # generate figures
 # ----------------------------------------------------
-# EXTENDED FIG 3e ------------------------------------
+# EXTENDED FIG 2e ------------------------------------
 # ----------------------------------------------------
-# EXTENDED FIG 3eA
+# EXTENDED FIG 2eA
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ pEMT_top25_vs_mid50_vs_bottom25, data = df.km)
 
 p.s2eA <- ggsurvplot(fit,
@@ -76,13 +76,13 @@ p.s2eC <- p.s2eC$plot +
 p.s2e <- p.s2eA + p.s2eB + p.s2eC + 
     patchwork::plot_layout(axis_titles = "collect_y", guides = "collect")
 
-ggsave(filename = file.path(figures.dir, "s3e.pdf"), 
+ggsave(filename = file.path(figures.dir, "s2e.pdf"), 
        plot = p.s2e, device = "pdf", width = 3.5 * 3, height = 3)
 
 
-# EXTENDED FIG 8f
+# EXTENDED FIG 6f
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ SPP1_top50_vs_bottom50, data = df.km)
-p.s8f <- ggsurvplot(fit,
+p.s6f <- ggsurvplot(fit,
            # conf.int = TRUE,
            risk.table.col = "strata", # Change risk table color by groups
            linetype = "solid", # Change line type by groups
@@ -93,35 +93,35 @@ p.s8f <- ggsurvplot(fit,
            # palette = c("#E7B800", "#2E9FDF")
            censor = F)
 
-p.s8f <- p.s8f$plot + 
+p.s6f <- p.s6f$plot + 
     labs(color = NULL) +
     scale_color_manual(labels = c("Low SPP1", "High SPP1"),
                        values = c("#0091CA", "#D8423D")) +
     xlab("Time (months)")
 
-ggsave(filename = file.path(figures.dir, "s8f.pdf"), 
-       plot = p.s8f, device = "pdf", width = 3, height = 3.5)
+ggsave(filename = file.path(figures.dir, "s6f.pdf"), 
+       plot = p.s6f, device = "pdf", width = 3, height = 3.5)
 # ----------------------------------------------------
-# EXTENDED FIG 3f
+# EXTENDED FIG 2g
 # ----------------------------------------------------
 fit <- survfit(Surv(Overall.Survival..Months., Overall.Survival.Status) ~ p53_status2, data = df.km)
 print(fit)
 
-p.s2f <- ggsurvplot(fit, 
+p.s2g <- ggsurvplot(fit, 
            # conf.int = TRUE,
            risk.table.col = "strata", # Change risk table color by groups
            pval = T,
            pval.method = T,
            ggtheme = theme_classic(), # Change ggplot2 theme
            )
-p.s2f <- p.s2f$plot + 
+p.s2g <- p.s2g$plot + 
     labs(color = NULL) +
     scale_color_manual(labels = c("TP53 WT", "TP53 mut"),
                        values = c("#0091CA", "#D8423D")) +
     xlab("Time (months)")
 
-ggsave(filename = file.path(figures.dir, "s3f.pdf"), 
-       plot = p.s2f, device = "pdf", width = 3, height = 3.5)
+ggsave(filename = file.path(figures.dir, "s2g.pdf"), 
+       plot = p.s2g, device = "pdf", width = 3, height = 3.5)
 
 # ----------------------------------------------------
 # FIG 2d ---------------------------------------------
@@ -147,17 +147,17 @@ df <- df |>
                             .default = name))
 
 p.2d <- ggdotchart(df, x = "name", y = "neglog10pval",
-           color = "outcome",                                # Color by groups
-           palette = c("#0091CA", "#D8423D"), # Custom color palette
-           sorting = "descending",                       # Sort value in descending order
-           add = "segments",                             # Add segments from y = 0 to dots
-           add.params = list(color = "lightgray", size = 2), # Change segment color and size
-           group = "outcome",                                # Order by groups
-           dot.size = 8,                                 # Large dot size
-           label = round(df$neglog10pval,1),                        # Add mpg values as dot labels
+           color = "outcome",  # Color by groups
+           palette = c("#0091CA", "#D8423D"),  # Custom color palette
+           sorting = "descending",  # Sort value in descending order
+           add = "segments",  # Add segments from y = 0 to dots
+           add.params = list(color = "lightgray", size = 2),  # Change segment color and size
+           group = "outcome",  # Order by groups
+           dot.size = 8,  # Large dot size
+           label = round(df$neglog10pval,1),  # Add mpg values as dot labels
            font.label = list(color = "white", size = 8, 
-                             vjust = 0.5),               # Adjust label parameters
-           ggtheme = theme_pubr()                        # ggplot2 theme
+                             vjust = 0.5),  # Adjust label parameters
+           ggtheme = theme_pubr()  # ggplot2 theme
   ) +
   geom_hline(yintercept = 0, linetype = 1, color = "black") +
   geom_hline(yintercept = -1.3, linetype = 2, color = "lightgray") +
