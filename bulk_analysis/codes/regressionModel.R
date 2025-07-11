@@ -143,59 +143,63 @@ df[colsToTransform] <- lapply(df[colsToTransform], convertMutStatus)
 # ----------------------------------------------------
 # generate figures
 # ----------------------------------------------------
-# FIG 2H
+# FIG 3B
 formula <- "p53_status + egfr_status + kras_g12c_status + kras_g12d_status + kras_g12v_status + stk11_status + keap1_status + rbm10_status + ptprd_status + Cancer_prop"
 programs <- c("p53_targets", "AT.SFTPA2,1", "CC.G2M", "Glycolysis/Hypox", "pEMT", "Endothelial", "Pericytes")
 
 finalModelResultsDF <- generateModelResults(df, programs, formula)
 # finalModelResultsDF |>
 #     filter((program %in% selectedPrograms) & (mutation %in% selectedMutations)) |>
-#     write.csv(file.path(data.path, "2h.csv"))
+#     write.csv(file.path(data.path, "3b.csv"))
 # Selected programs and mutations for the plot
 selectedPrograms <- c("p53_targets", "AT.SFTPA2,1", "CC.G2M", "Glycolysis/Hypox", "pEMT", "Endothelial", "Pericytes")
 selectedMutations <- c("uncorrected_p53", "EGFR", "KRAS_G12C", "KRAS_G12D", "KRAS_G12V", "STK11", "KEAP1", "RBM10", "PTPRD", "P53")
 
-p.2h <- generateRegressionPlot(finalModelResultsDF, selectedPrograms, selectedMutations)
-ggsave(filename = file.path(paste0(figures.dir, "2h.pdf")), 
-       plot = p.2h, 
+p.3b <- generateRegressionPlot(finalModelResultsDF, selectedPrograms, selectedMutations)
+ggsave(filename = file.path(paste0(figures.dir, "3b.pdf")), 
+       plot = p.3b, 
        device = "pdf", 
        width = 5, 
        height = 6.25)
 
 
-# EXTENDED FIG 3G: regression plot added during final revision; new_regression_plot.csv file received from Will
-df.nrp <- read_csv(file.path(data.path, "new_regression_plot.csv")) |>
+# FIG 3C
+# ---- add code here ---
+
+
+# EXTENDED FIG 2F: regression plot added during final revision; new_regression_plot.csv file received from Will
+df.s2f <- read_csv(file.path(data.path, "new_regression_plot.csv")) |>
     column_to_rownames("...1")
 
-selectedPrograms <- sort(unique(df.nrp$program))
+selectedPrograms <- sort(unique(df.s2f$program))
 selectedMutations <- c("uncorrected", "Histology corrected", "Stage corrected", "Histology + stage corrected")
 
-p.nrp <- generateRegressionPlot(df.nrp, selectedPrograms, selectedMutations)
-ggsave(filename = file.path(paste0(figures.dir, "s3g.pdf")), 
-       plot = p.nrp, 
+p.s2f <- generateRegressionPlot(df.s2f, selectedPrograms, selectedMutations)
+ggsave(filename = file.path(paste0(figures.dir, "s2f.pdf")), 
+       plot = p.s2f, 
        device = "pdf", 
        width = 5, 
        height = 6.25)
 
 
-# EXTENDED FIG 4B old
-formula <- "p53_status + kras_status + egfr_status + stk11_status + Cancer_prop"
-programs <- c("p53_targets", "AT.SFTPA2,1", "CC.G2M", "Glycolysis/Hypox", "pEMT", "Endothelial", "Pericytes")
+# # EXTENDED FIG 4B old- taken out during revision 
+# formula <- "p53_status + kras_status + egfr_status + stk11_status + Cancer_prop"
+# programs <- c("p53_targets", "AT.SFTPA2,1", "CC.G2M", "Glycolysis/Hypox", "pEMT", "Endothelial", "Pericytes")
 
-finalModelResultsDF <- generateModelResults(df, programs, formula)
-# finalModelResultsDF |>
-#     filter((program %in% selectedPrograms) & (mutation %in% selectedMutations)) |>
-#     write.csv(file.path(data.path, "s3b.csv"))
-# Selected programs and mutations for the plot
-selectedPrograms <- c("p53_targets", "AT.SFTPA2,1", "CC.G2M", "Glycolysis/Hypox", "pEMT", "Endothelial", "Pericytes")
-selectedMutations <- c("uncorrected_p53", "EGFR", "KRAS", "STK11", "P53")
+# finalModelResultsDF <- generateModelResults(df, programs, formula)
+# # finalModelResultsDF |>
+# #     filter((program %in% selectedPrograms) & (mutation %in% selectedMutations)) |>
+# #     write.csv(file.path(data.path, "s3b.csv"))
+# # Selected programs and mutations for the plot
+# selectedPrograms <- c("p53_targets", "AT.SFTPA2,1", "CC.G2M", "Glycolysis/Hypox", "pEMT", "Endothelial", "Pericytes")
+# selectedMutations <- c("uncorrected_p53", "EGFR", "KRAS", "STK11", "P53")
 
-p.s3b <- generateRegressionPlot(finalModelResultsDF, selectedPrograms, selectedMutations)
-ggsave(filename = file.path(paste0(figures.dir, "s4b_old.pdf")), 
-       plot = p.s3b, 
-       device = "pdf", 
-       width = 4, 
-       height = 6.25)
+# p.s3b <- generateRegressionPlot(finalModelResultsDF, selectedPrograms, selectedMutations)
+# ggsave(filename = file.path(paste0(figures.dir, "s4b_old.pdf")), 
+#        plot = p.s3b, 
+#        device = "pdf", 
+#        width = 4, 
+#        height = 6.25)
 # ----------------------------------------------------
 # correct for p53, kras, egfr, stk11, and tumor purity 
 # to generate p-values for boxplots
