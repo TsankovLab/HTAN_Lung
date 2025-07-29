@@ -4,7 +4,7 @@
 
 This repository contains custom code to reproduce main analyses in our manuscript, "A cellular and spatial atlas of TP53-associated tissue remodeling defines a multicellular tumor ecosystem in lung adenocarcinoma."
 
-Processed scRNA-seq data, spatial transcriptomic data, and mutation information can be downloaded at https://drive.google.com/drive/folders/1yFkudI3VLDPdEqlda2gbBnKia_2JmY3s.
+Processed scRNA-seq data, spatial transcriptomic data, and mutation information can be downloaded at https://doi.org/10.5281/zenodo.16546233.
 
 System Requirements:
 - Operating System: Tested on Rocky Linux 9.4.
