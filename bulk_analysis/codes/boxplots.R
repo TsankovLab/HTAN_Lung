@@ -123,7 +123,7 @@ createBoxplots(plotVector = v.1f, w = 3, h = 4, df.pvals = df.pvals.tcga,
                outfileName = "1f")
 
 # FIG 2E
-v.2e <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis/Hypox", "pEMT")
+v.2e <- c("p53_targets", "AT2", "CC.G2M", "`Glycolysis/Hypox`", "pEMT")
 
 createBoxplots(plotVector = v.2e, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
@@ -134,7 +134,7 @@ createBoxplots(plotVector = v.2e, df.pvals = df.pvals.tcga,
 
 
 # EXTENDED FIG 3A, D, E
-v.s3ade <- c("p53_targets", "AT2", "CC.G2M", "Glycolysis/Hypox", "pEMT") # row 1
+v.s3ade <- c("p53_targets", "AT2", "CC.G2M", "`Glycolysis/Hypox`", "pEMT") # row 1
 
 levels.tmp <- levels(luad.2018@meta.data$comut)
 createBoxplots(plotVector = v.s3ade, 
@@ -172,8 +172,8 @@ createBoxplots(plotVector = v.5d, w = 3, h = 4, df.pvals = df.pvals.tcga,
                outfileName = "5d")
 
 # EXTENDED FIG 1D
-v.s1d <- c("B.cells", "Fibroblast", "Cancer", "Mast", "T.CD4+", # row 1
-           "Myeloid", "NK.cells", "Smooth.muscle", "T.cells", "T.CD8+") # row 2
+v.s1d <- c("B.cells", "Fibroblast", "Cancer", "Mast", "`T.CD4+`", # row 1
+           "Myeloid", "NK.cells", "Smooth.muscle", "T.cells", "`T.CD8+`") # row 2
 
 createBoxplots(plotVector = v.s1d, df.pvals = df.pvals.tcga,
                xVar = "p53_status", 
@@ -293,7 +293,7 @@ createBoxplots(plotVector = v.s6c, w = 3, h = 4, df.pvals = df.pvals.tcga,
 
 
 # EXTENDED FIG 6D,E
-v.s8de <- c("SPP1", "CXCL9", "CXCL10", "CXCL11")
+v.s6de <- c("SPP1", "CXCL9", "CXCL10", "CXCL11")
 
 levels.tmp <- levels(luad.2018@meta.data$comut)
 createBoxplots(plotVector = v.s6de, w = 3, h = 5,
