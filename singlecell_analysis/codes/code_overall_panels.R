@@ -47,7 +47,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 
 ##########
 # load all obj
-all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../zenodo_data/all.merge.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -103,7 +103,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1D
-all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../zenodo_data/all.merge.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -140,7 +140,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1E
-malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../zenodo_data/malig.Rda"))
 
 maligv9.allsamples = malig
 
@@ -204,7 +204,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 1F and Extended 1D
-all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../zenodo_data/all.merge.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype
@@ -348,7 +348,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 1B
-all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../zenodo_data/all.merge.Rda"))
 
 ############
 pdf(file = paste0(figures.dir, "Fig1_overview/Ext_Fig1B.pdf"), useDingbats = F, width = 8)
@@ -360,7 +360,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 1C
-all = get(load("../dropbox_data/all.merge.new.cci.nodoublets.v4.Rda"))
+all = get(load("../zenodo_data/all.merge.Rda"))
 
 # celltype_2: rename celltype
 all$celltype_2 = all$celltype

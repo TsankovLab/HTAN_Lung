@@ -43,7 +43,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2A
-malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../zenodo_data/malig.Rda"))
 
 Idents(malig)  <- "subtype"
 malig.names<-c("AT2.like", "AT1.2.like", "CC.G2M", "CC.S", "Ciliated", 
@@ -63,7 +63,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2B
-malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../zenodo_data/malig.Rda"))
 
 genes <- c("SFTPA2", "SFTPA1", "SFTPC", "AKR1C1", "PTTG1", "CDKN3", "HIST1H4C", "PCNA", "CAPS", "CETN2", "PKM", "LDHA", "HLA-DRA", "HLA-DPA1", 'NDRG1',
            "SLC2A1", "ISG15", "IFI6", "HSPA1A", "JUN", "MT-ND5", "MT-ND6", "MT2A", "MT1X", "ATP5I", "SEPP1", "LAMC2", "VIM", "RPL32", "RPL29","LCN2", "SLPI", "S100A4", "KRT19", "NFKBIA", "CXCL2")
@@ -119,11 +119,11 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 2E (left)
-malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../zenodo_data/malig.Rda"))
 
 maligv9.allsamples = malig
 
-maligv9.scores.df <- maligv9.allsamples@meta.data[,c("orig.identSec", colnames(maligv9.allsamples@meta.data)[52:70])]
+maligv9.scores.df <- maligv9.allsamples@meta.data[,c("orig.identSec", colnames(maligv9.allsamples@meta.data)[13:31])]
 
 maligv9.scores.list <- split(maligv9.scores.df, f = maligv9.scores.df$orig.identSec)
 maligv9.scores.list.avg <- lapply(maligv9.scores.list, function(x) {
@@ -506,7 +506,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended Figure 2A
-malig <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
+malig <- get(load("../zenodo_data/malig.Rda"))
 
 ###########
 pdf(paste0(figures.dir, "Ext_Fig2A.pdf"), useDingbats = F, width = 10)

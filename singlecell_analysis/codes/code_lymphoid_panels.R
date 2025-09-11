@@ -8,10 +8,6 @@ library(tidyverse)
 library(data.table)
 library(pheatmap)
 
-# # Load Lymphoid object
-# figures.dir <- paste0(proj.path, "/Results/10x_All_190615/Immune.LymTnG400v11/")
-# load(file = paste0(figures.dir, "tcell.final.nodoublets.Rda")) # lymphoid
-
 # my outputs
 data.path <- "../data/"
 figures.dir <- "../../figures/"
@@ -24,10 +20,9 @@ source(paste0(data.path, "/R_utils/seuratutilsV3.R"))
 source(paste0(data.path, "/R_utils/color.R"))
 
 ### Load data ####
-#tcell = readRDS (file.path ('../dropbox_data','NKTcells.rds'))
-tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
-load(file = file.path ('../dropbox_data', 'bcell.final.nodoublets.Rda')) # bmast
-tnk <- get(load(file.path('../dropbox_data','tnk.validation.Rda'))) # validation cohort
+tcell = get(load("../zenodo_data/tcell.final.nodoublets.Rda"))
+load(file = file.path ('../zenodo_data', 'bcell.final.nodoublets.Rda')) # bplasma
+tnk <- get(load(file.path('../zenodo_data','tnk.validation.Rda'))) # validation cohort
 
 
 
@@ -113,7 +108,6 @@ dev.off()
 
 
 #### S7C_continue ####    
-tnk <- subset(tnk, subset = sampleID != "1170")
 
 comp.df <- as.matrix(table(tnk$sampleID, tnk$predicted.id))
 comp.df  <- prop.table(comp.df , 1)
@@ -389,7 +383,7 @@ library(tidyverse)
 # ----------------------------------------------------
 # load the malig compartment object
 # ----------------------------------------------------
-obj <- get(load("../dropbox_data/maligv9.allsamplesv4.Rda"))
+obj <- get(load("../zenodo_data/malig.Rda"))
 # ----------------------------------------------------
 # preparing the data for plotting
 # ----------------------------------------------------
@@ -578,7 +572,7 @@ genes <- c(
   "FOXP3")
 #genes <- unique(markers$gene)
 
-tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
+tcell = get(load("../zenodo_data/tcell.final.nodoublets.Rda"))
 tcell <- FindVariableFeatures(tcell)
 tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
 
@@ -632,7 +626,7 @@ genes <- c(
   "PDCD1")
 #genes <- unique(markers$gene)
 
-tcell = get(load("../dropbox_data/tcell.final.nodoublets.Rda"))
+tcell = get(load("../zenodo_data/tcell.final.nodoublets.Rda"))
 tcell <- FindVariableFeatures(tcell)
 tcell <- ScaleData(tcell, features = unique(c(VariableFeatures(tcell), genes))) # add genes of interest to the heatmap
 

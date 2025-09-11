@@ -40,7 +40,7 @@ source(paste0(data.path, "/R_utils/color.R"))
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 4A
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 ###########
 pdf(paste0(figures.dir, "Fig4A.pdf"), useDingbats = F, width = 10)
@@ -53,7 +53,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Figure 4B
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 comp.df <- as.matrix(table(end$orig.identSec, end$subtype))
 comp.df  <- prop.table(comp.df , 1)
@@ -140,7 +140,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 4B
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 genes <- c("HPGD", "EDNRB", "S100A4", "IGFBP3", "DKK2", "FBLN5", "FCN3", "CD36", "IL7R", "CCL21", "TFF3", "FABP4", "CPE", "C7", "CLU", "SPRY1", "ZNF385D",
            "OLFM1", "COL4A1", "PLVAP", "ESM1", "STMN1", "TOP2A", "MKI67", "ISG15", "CXCL10", "CXCL11")   
@@ -169,7 +169,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 4C
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 DefaultAssay(end) <- "RNA"
 end <- NormalizeData(end)
@@ -204,7 +204,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 4D
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 # Stacked bar plot
 obj <- end
@@ -232,7 +232,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 4F_top
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 genes <- c('PGF', 'FN1','ITGA9','TNFRSF10D','HAVCR2','COL6A2','TNFRSF10B','NAMPT','NRP2','ITGB1','BAG6','NRP1','NOTCH1','COPA','CD55','FLT1','PODXL',
            'ENTPD1','EFNA1','KDR','TGFBR3','ITGA2','PLXNA2','ITGA10','TNFRSF10A','EFNB2','EFNB1','LGALS9','CD46','NOTCH4','ACKR1')
@@ -261,7 +261,7 @@ dev.off()
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 #####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ##################### Extended 4F_bottom
-end <- get(load("../dropbox_data/end.final.nodoublets.Rda"))
+end <- get(load("../zenodo_data/end.final.nodoublets.Rda"))
 
 genes <- c('PGF', 'TNFSF10', 'FN1','ITGA9','TNFRSF10D','HAVCR2','COL6A2','TNFRSF10B','NAMPT','NRP2','ITGB1','BAG6','NRP1','NOTCH1','COPA','CD55','FLT1','PODXL',
            'ENTPD1','EFNA1','KDR','TGFBR3','ITGA2','PLXNA2','ITGA10','TNFRSF10A','EFNB2','EFNB1','LGALS9','CD46','NOTCH4','ACKR1')
